@@ -410,7 +410,7 @@ func (a *RepositoriesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesB
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarTempParam, localVarOk := localVarOptionals["body"].(Commitstatus); localVarOk {
+	if localVarTempParam, localVarOk := localVarOptionals["body"].(Repository); localVarOk {
 		localVarPostBody = &localVarTempParam
 	}
 	if ctx != nil {
