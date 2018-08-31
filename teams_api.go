@@ -57,6 +57,13 @@ func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[st
 	if localVarTempParam, localVarOk := localVarOptionals["role"].(string); localVarOk {
 		localVarQueryParams.Add("role", parameterToString(localVarTempParam, ""))
 	}
+	
+	// overwrites the url with the passed one, used when paging with "next" / "previous"
+	// https://developer.atlassian.com/bitbucket/api/2/reference/meta/pagination
+	if localVarTempParam, localVarOk := localVarOptionals["override_url"].(string); localVarOk {
+		localVarPath = localVarTempParam
+	}
+	
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
