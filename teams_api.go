@@ -11,14 +11,13 @@
 package bitbucket
 
 import (
+	"io/ioutil"
+	"net/url"
+	"net/http"
+	"strings"
+	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/url"
-	"strings"
-
-	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -28,19 +27,20 @@ var (
 
 type TeamsApiService service
 
-/* TeamsApiService
-Returns all the teams that the authenticated user is associated with.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "role" (string)  Filters the teams based on the authenticated user&#39;s role on each team.  * **member**: returns a list of all the teams which the caller is a member of   at least one team group or repository owned by the team * **contributor**: returns a list of teams which the caller has write access   to at least one repository owned by the team * **admin**: returns a list teams which the caller has team administrator access
-@return PaginatedTeams*/
-func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[string]interface{}) (PaginatedTeams, *http.Response, error) {
+
+/* TeamsApiService 
+ Returns all the teams that the authenticated user is associated with.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "role" (string)  Filters the teams based on the authenticated user&#39;s role on each team.  * **member**: returns a list of all the teams which the caller is a member of   at least one team group or repository owned by the team * **contributor**: returns a list of teams which the caller has write access   to at least one repository owned by the team * **admin**: returns a list teams which the caller has team administrator access 
+ @return PaginatedTeams*/
+func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[string]interface{}) (PaginatedTeams,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedTeams
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedTeams
 	)
 
 	// create path and map variables
@@ -58,7 +58,7 @@ func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[st
 		localVarQueryParams.Add("role", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -69,7 +69,7 @@ func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[st
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -107,30 +107,22 @@ func (a *TeamsApiService) TeamsGet(ctx context.Context, localVarOptionals map[st
 		return successPayload, localVarHttpResponse, err
 	}
 
-	return successPayload, localVarHttpResponse, err
-}
-
-// TeamsPageGet is used to get the next or previous page of PaginatedTeams
-func (a *RepositoriesApiService) TeamsPageGet(ctx context.Context, pageURL string) (PaginatedTeams, *http.Response, error) {
-	var successPayload PaginatedTeams
-
-	localVarHttpResponse, err := a.client.PageGet(ctx, pageURL, &successPayload)
 
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Returns the list of accounts that are following this team.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The team&#39;s username
-@return PaginatedUsers*/
-func (a *TeamsApiService) TeamsUsernameFollowersGet(ctx context.Context, username string) (PaginatedUsers, *http.Response, error) {
+/* TeamsApiService 
+ Returns the list of accounts that are following this team.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username The team&#39;s username
+ @return PaginatedUsers*/
+func (a *TeamsApiService) TeamsUsernameFollowersGet(ctx context.Context, username string) (PaginatedUsers,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedUsers
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedUsers
 	)
 
 	// create path and map variables
@@ -141,8 +133,9 @@ func (a *TeamsApiService) TeamsUsernameFollowersGet(ctx context.Context, usernam
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -153,7 +146,7 @@ func (a *TeamsApiService) TeamsUsernameFollowersGet(ctx context.Context, usernam
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -191,21 +184,22 @@ func (a *TeamsApiService) TeamsUsernameFollowersGet(ctx context.Context, usernam
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Returns the list of accounts this team is following.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The team&#39;s username
-@return PaginatedUsers*/
-func (a *TeamsApiService) TeamsUsernameFollowingGet(ctx context.Context, username string) (PaginatedUsers, *http.Response, error) {
+/* TeamsApiService 
+ Returns the list of accounts this team is following.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username The team&#39;s username
+ @return PaginatedUsers*/
+func (a *TeamsApiService) TeamsUsernameFollowingGet(ctx context.Context, username string) (PaginatedUsers,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedUsers
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedUsers
 	)
 
 	// create path and map variables
@@ -216,8 +210,9 @@ func (a *TeamsApiService) TeamsUsernameFollowingGet(ctx context.Context, usernam
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -228,7 +223,7 @@ func (a *TeamsApiService) TeamsUsernameFollowingGet(ctx context.Context, usernam
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -266,21 +261,22 @@ func (a *TeamsApiService) TeamsUsernameFollowingGet(ctx context.Context, usernam
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Gets the public information associated with a team.  If the team&#39;s profile is private, &#x60;location&#x60;, &#x60;website&#x60; and &#x60;created_on&#x60; elements are omitted.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username The team&#39;s username or UUID.
-@return Team*/
-func (a *TeamsApiService) TeamsUsernameGet(ctx context.Context, username string) (Team, *http.Response, error) {
+/* TeamsApiService 
+ Gets the public information associated with a team.  If the team&#39;s profile is private, &#x60;location&#x60;, &#x60;website&#x60; and &#x60;created_on&#x60; elements are omitted.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username The team&#39;s username or UUID.
+ @return Team*/
+func (a *TeamsApiService) TeamsUsernameGet(ctx context.Context, username string) (Team,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Team
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Team
 	)
 
 	// create path and map variables
@@ -291,8 +287,9 @@ func (a *TeamsApiService) TeamsUsernameGet(ctx context.Context, username string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -303,7 +300,7 @@ func (a *TeamsApiService) TeamsUsernameGet(ctx context.Context, username string)
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -341,21 +338,22 @@ func (a *TeamsApiService) TeamsUsernameGet(ctx context.Context, username string)
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Returns a paginated list of webhooks installed on this team.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@return PaginatedWebhookSubscriptions*/
-func (a *TeamsApiService) TeamsUsernameHooksGet(ctx context.Context, username string) (PaginatedWebhookSubscriptions, *http.Response, error) {
+/* TeamsApiService 
+ Returns a paginated list of webhooks installed on this team.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return PaginatedWebhookSubscriptions*/
+func (a *TeamsApiService) TeamsUsernameHooksGet(ctx context.Context, username string) (PaginatedWebhookSubscriptions,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedWebhookSubscriptions
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedWebhookSubscriptions
 	)
 
 	// create path and map variables
@@ -366,8 +364,9 @@ func (a *TeamsApiService) TeamsUsernameHooksGet(ctx context.Context, username st
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -378,7 +377,7 @@ func (a *TeamsApiService) TeamsUsernameHooksGet(ctx context.Context, username st
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -416,21 +415,22 @@ func (a *TeamsApiService) TeamsUsernameHooksGet(ctx context.Context, username st
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Creates a new webhook on the specified team.  Team webhooks are fired for events from all repositories belonging to that team account.  Note that only admins can install webhooks on teams.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@return WebhookSubscription*/
-func (a *TeamsApiService) TeamsUsernameHooksPost(ctx context.Context, username string) (WebhookSubscription, *http.Response, error) {
+/* TeamsApiService 
+ Creates a new webhook on the specified team.  Team webhooks are fired for events from all repositories belonging to that team account.  Note that only admins can install webhooks on teams.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return WebhookSubscription*/
+func (a *TeamsApiService) TeamsUsernameHooksPost(ctx context.Context, username string) (WebhookSubscription,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     WebhookSubscription
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  WebhookSubscription
 	)
 
 	// create path and map variables
@@ -441,8 +441,9 @@ func (a *TeamsApiService) TeamsUsernameHooksPost(ctx context.Context, username s
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -453,7 +454,7 @@ func (a *TeamsApiService) TeamsUsernameHooksPost(ctx context.Context, username s
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -491,21 +492,22 @@ func (a *TeamsApiService) TeamsUsernameHooksPost(ctx context.Context, username s
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Deletes the specified webhook subscription from the given team account.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param uid The installed webhook&#39;s id
-@return */
-func (a *TeamsApiService) TeamsUsernameHooksUidDelete(ctx context.Context, username string, uid string) (*http.Response, error) {
+/* TeamsApiService 
+ Deletes the specified webhook subscription from the given team account.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param uid The installed webhook&#39;s id
+ @return */
+func (a *TeamsApiService) TeamsUsernameHooksUidDelete(ctx context.Context, username string, uid string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -517,8 +519,9 @@ func (a *TeamsApiService) TeamsUsernameHooksUidDelete(ctx context.Context, usern
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -529,7 +532,7 @@ func (a *TeamsApiService) TeamsUsernameHooksUidDelete(ctx context.Context, usern
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -566,19 +569,19 @@ func (a *TeamsApiService) TeamsUsernameHooksUidDelete(ctx context.Context, usern
 	return localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Returns the webhook with the specified id installed on the given team account.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param uid The installed webhook&#39;s id.
-@return WebhookSubscription*/
-func (a *TeamsApiService) TeamsUsernameHooksUidGet(ctx context.Context, username string, uid string) (WebhookSubscription, *http.Response, error) {
+/* TeamsApiService 
+ Returns the webhook with the specified id installed on the given team account.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param uid The installed webhook&#39;s id.
+ @return WebhookSubscription*/
+func (a *TeamsApiService) TeamsUsernameHooksUidGet(ctx context.Context, username string, uid string) (WebhookSubscription,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     WebhookSubscription
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  WebhookSubscription
 	)
 
 	// create path and map variables
@@ -590,8 +593,9 @@ func (a *TeamsApiService) TeamsUsernameHooksUidGet(ctx context.Context, username
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -602,7 +606,7 @@ func (a *TeamsApiService) TeamsUsernameHooksUidGet(ctx context.Context, username
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -640,22 +644,23 @@ func (a *TeamsApiService) TeamsUsernameHooksUidGet(ctx context.Context, username
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-Updates the specified webhook subscription.  The following properties can be mutated:  * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;active&#x60; * &#x60;events&#x60;
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param uid The installed webhook&#39;s id
-@return WebhookSubscription*/
-func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username string, uid string) (WebhookSubscription, *http.Response, error) {
+/* TeamsApiService 
+ Updates the specified webhook subscription.  The following properties can be mutated:  * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;active&#x60; * &#x60;events&#x60;
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param uid The installed webhook&#39;s id
+ @return WebhookSubscription*/
+func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username string, uid string) (WebhookSubscription,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     WebhookSubscription
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  WebhookSubscription
 	)
 
 	// create path and map variables
@@ -667,8 +672,9 @@ func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -679,7 +685,7 @@ func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -717,21 +723,22 @@ func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-All members of a team.  Returns all members of the specified team. Any member of any of the team&#39;s groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team&#39;s repositories.  Note that members using the \&quot;private profile\&quot; feature are not included.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@return User*/
-func (a *TeamsApiService) TeamsUsernameMembersGet(ctx context.Context, username string) (User, *http.Response, error) {
+/* TeamsApiService 
+ All members of a team.  Returns all members of the specified team. Any member of any of the team&#39;s groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team&#39;s repositories.  Note that members using the \&quot;private profile\&quot; feature are not included.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return User*/
+func (a *TeamsApiService) TeamsUsernameMembersGet(ctx context.Context, username string) (User,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     User
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  User
 	)
 
 	// create path and map variables
@@ -742,8 +749,9 @@ func (a *TeamsApiService) TeamsUsernameMembersGet(ctx context.Context, username 
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -754,7 +762,7 @@ func (a *TeamsApiService) TeamsUsernameMembersGet(ctx context.Context, username 
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -792,21 +800,22 @@ func (a *TeamsApiService) TeamsUsernameMembersGet(ctx context.Context, username 
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-All repositories owned by a user/team. This includes private repositories, but filtered down to the ones that the calling user has access to.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@return ModelError*/
-func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, username string) (ModelError, *http.Response, error) {
+/* TeamsApiService 
+ All repositories owned by a user/team. This includes private repositories, but filtered down to the ones that the calling user has access to.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return ModelError*/
+func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, username string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -817,8 +826,9 @@ func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, user
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -829,7 +839,7 @@ func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, user
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -867,21 +877,22 @@ func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, user
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* TeamsApiService
-All repositories owned by a user/team. This includes private repositories, but filtered down to the ones that the calling user has access to.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@return ModelError*/
-func (a *TeamsApiService) UsersUsernameRepositoriesGet(ctx context.Context, username string) (ModelError, *http.Response, error) {
+/* TeamsApiService 
+ All repositories owned by a user/team. This includes private repositories, but filtered down to the ones that the calling user has access to.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return ModelError*/
+func (a *TeamsApiService) UsersUsernameRepositoriesGet(ctx context.Context, username string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -892,8 +903,9 @@ func (a *TeamsApiService) UsersUsernameRepositoriesGet(ctx context.Context, user
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -904,7 +916,7 @@ func (a *TeamsApiService) UsersUsernameRepositoriesGet(ctx context.Context, user
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -942,5 +954,7 @@ func (a *TeamsApiService) UsersUsernameRepositoriesGet(ctx context.Context, user
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
+
