@@ -11,13 +11,14 @@
 package bitbucket
 
 import (
-	"io/ioutil"
-	"net/url"
-	"net/http"
-	"strings"
-	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -27,22 +28,21 @@ var (
 
 type CommitstatusesApiService service
 
-
-/* CommitstatusesApiService 
- Returns the specified build status for a commit.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param node The commit&#39;s SHA1
- @param key The build status&#39; unique key
- @return Commitstatus*/
-func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildKeyGet(ctx context.Context, username string, repoSlug string, node string, key string) (Commitstatus,  *http.Response, error) {
+/* CommitstatusesApiService
+Returns the specified build status for a commit.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username
+@param repoSlug
+@param node The commit&#39;s SHA1
+@param key The build status&#39; unique key
+@return Commitstatus*/
+func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildKeyGet(ctx context.Context, username string, repoSlug string, node string, key string) (Commitstatus, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Commitstatus
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Commitstatus
 	)
 
 	// create path and map variables
@@ -56,9 +56,8 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -69,7 +68,7 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -107,27 +106,26 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* CommitstatusesApiService 
- Used to update the current status of a build status object on the specific commit.  This operation can also be used to change other properties of the build status:  * &#x60;state&#x60; * &#x60;name&#x60; * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;refname&#x60;  The &#x60;key&#x60; cannot be changed.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param node The commit&#39;s SHA1
- @param key The commit status&#39; unique key
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (Commitstatus) The updated build status object
- @return Commitstatus*/
-func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildKeyPut(ctx context.Context, username string, repoSlug string, node string, key string, localVarOptionals map[string]interface{}) (Commitstatus,  *http.Response, error) {
+/* CommitstatusesApiService
+Used to update the current status of a build status object on the specific commit.  This operation can also be used to change other properties of the build status:  * &#x60;state&#x60; * &#x60;name&#x60; * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;refname&#x60;  The &#x60;key&#x60; cannot be changed.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username
+@param repoSlug
+@param node The commit&#39;s SHA1
+@param key The commit status&#39; unique key
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (Commitstatus) The updated build status object
+@return Commitstatus*/
+func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildKeyPut(ctx context.Context, username string, repoSlug string, node string, key string, localVarOptionals map[string]interface{}) (Commitstatus, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Commitstatus
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Commitstatus
 	)
 
 	// create path and map variables
@@ -141,9 +139,8 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -154,7 +151,7 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -196,26 +193,25 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* CommitstatusesApiService 
- Creates a new build status against the specified commit.  If the specified key already exists, the existing status object will be overwritten.  When creating a new commit status, you can use a URI template for the URL. Templates are URLs that contain variable names that Bitbucket will evaluate at runtime whenever the URL is displayed anywhere similar to parameter substitution in [Bitbucket Connect](https://developer.atlassian.com/bitbucket/concepts/context-parameters.html). For example, one could use &#x60;https://foo.com/builds/{repository.full_name}&#x60; which Bitbucket will turn into &#x60;https://foo.com/builds/foo/bar&#x60; at render time. The context variables available are &#x60;repository&#x60; and &#x60;commit&#x60;.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param node The commit&#39;s SHA1
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "body" (Commitstatus) The new commit status object.
- @return Commitstatus*/
-func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildPost(ctx context.Context, username string, repoSlug string, node string, localVarOptionals map[string]interface{}) (Commitstatus,  *http.Response, error) {
+/* CommitstatusesApiService
+Creates a new build status against the specified commit.  If the specified key already exists, the existing status object will be overwritten.  When creating a new commit status, you can use a URI template for the URL. Templates are URLs that contain variable names that Bitbucket will evaluate at runtime whenever the URL is displayed anywhere similar to parameter substitution in [Bitbucket Connect](https://developer.atlassian.com/bitbucket/concepts/context-parameters.html). For example, one could use &#x60;https://foo.com/builds/{repository.full_name}&#x60; which Bitbucket will turn into &#x60;https://foo.com/builds/foo/bar&#x60; at render time. The context variables available are &#x60;repository&#x60; and &#x60;commit&#x60;.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username
+@param repoSlug
+@param node The commit&#39;s SHA1
+@param optional (nil or map[string]interface{}) with one or more of:
+    @param "body" (Commitstatus) The new commit status object.
+@return Commitstatus*/
+func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesBuildPost(ctx context.Context, username string, repoSlug string, node string, localVarOptionals map[string]interface{}) (Commitstatus, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Commitstatus
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     Commitstatus
 	)
 
 	// create path and map variables
@@ -228,9 +224,8 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -241,7 +236,7 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -283,24 +278,23 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
 
-/* CommitstatusesApiService 
- Returns all statuses (e.g. build results) for a specific commit.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param node The commit&#39;s SHA1
- @return PaginatedCommitstatuses*/
-func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesGet(ctx context.Context, username string, repoSlug string, node string) (PaginatedCommitstatuses,  *http.Response, error) {
+/* CommitstatusesApiService
+Returns all statuses (e.g. build results) for a specific commit.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username
+@param repoSlug
+@param node The commit&#39;s SHA1
+@return PaginatedCommitstatuses*/
+func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatusesGet(ctx context.Context, username string, repoSlug string, node string) (PaginatedCommitstatuses, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  PaginatedCommitstatuses
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     PaginatedCommitstatuses
 	)
 
 	// create path and map variables
@@ -313,9 +307,8 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -326,7 +319,7 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -364,24 +357,32 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugCommitNodeStatuse
 		return successPayload, localVarHttpResponse, err
 	}
 
+	return successPayload, localVarHttpResponse, err
+}
+
+// CommitstatusesPageGet is used to get the next or previous page of PaginatedCommitstatuses
+func (a *RepositoriesApiService) CommitstatusesPageGet(ctx context.Context, pageURL string) (PaginatedCommitstatuses, *http.Response, error) {
+	var successPayload PaginatedCommitstatuses
+
+	localVarHttpResponse, err := a.client.PageGet(ctx, pageURL, &successPayload)
 
 	return successPayload, localVarHttpResponse, err
 }
 
-/* CommitstatusesApiService 
- Returns all statuses (e.g. build results) for the given pull request.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param pullRequestId The pull request&#39;s id
- @return PaginatedCommitstatuses*/
-func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (PaginatedCommitstatuses,  *http.Response, error) {
+/* CommitstatusesApiService
+Returns all statuses (e.g. build results) for the given pull request.
+* @param ctx context.Context for authentication, logging, tracing, etc.
+@param username
+@param repoSlug
+@param pullRequestId The pull request&#39;s id
+@return PaginatedCommitstatuses*/
+func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (PaginatedCommitstatuses, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  PaginatedCommitstatuses
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		successPayload     PaginatedCommitstatuses
 	)
 
 	// create path and map variables
@@ -394,9 +395,8 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugPullrequestsPullR
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -407,7 +407,7 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugPullrequestsPullR
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-		}
+	}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -445,7 +445,5 @@ func (a *CommitstatusesApiService) RepositoriesUsernameRepoSlugPullrequestsPullR
 		return successPayload, localVarHttpResponse, err
 	}
 
-
 	return successPayload, localVarHttpResponse, err
 }
-
