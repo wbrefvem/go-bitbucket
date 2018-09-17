@@ -11,14 +11,13 @@
 package bitbucket
 
 import (
+	"io/ioutil"
+	"net/url"
+	"net/http"
+	"strings"
+	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/url"
-	"strings"
-
-	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -28,20 +27,21 @@ var (
 
 type IssueTrackerApiService service
 
-/* IssueTrackerApiService
-Returns the specified issue tracker component object.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param componentId The component&#39;s id
-@return Component*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponentIdGet(ctx context.Context, username string, repoSlug string, componentId int32) (Component, *http.Response, error) {
+
+/* IssueTrackerApiService 
+ Returns the specified issue tracker component object.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param componentId The component&#39;s id
+ @return Component*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponentIdGet(ctx context.Context, username string, repoSlug string, componentId int32) (Component,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Component
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Component
 	)
 
 	// create path and map variables
@@ -54,8 +54,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponent
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -66,7 +67,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponent
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -104,22 +105,23 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponent
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the components that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@return PaginatedComponents*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx context.Context, username string, repoSlug string) (PaginatedComponents, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the components that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @return PaginatedComponents*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx context.Context, username string, repoSlug string) (PaginatedComponents,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedComponents
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedComponents
 	)
 
 	// create path and map variables
@@ -131,8 +133,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx c
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -143,7 +146,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx c
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -181,22 +184,23 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx c
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the issues in the issue tracker.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@return PaginatedIssues*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx context.Context, username string, repoSlug string) (PaginatedIssues, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the issues in the issue tracker.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @return PaginatedIssues*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx context.Context, username string, repoSlug string) (PaginatedIssues,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedIssues
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedIssues
 	)
 
 	// create path and map variables
@@ -208,8 +212,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx conte
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -220,7 +225,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx conte
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -258,32 +263,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx conte
 		return successPayload, localVarHttpResponse, err
 	}
 
-	return successPayload, localVarHttpResponse, err
-}
-
-// IssuesPageGet is used to get the next or previous page of PaginatedIssues
-func (a *RepositoriesApiService) IssuesPageGet(ctx context.Context, pageURL string) (PaginatedIssues, *http.Response, error) {
-	var successPayload PaginatedIssues
-
-	localVarHttpResponse, err := a.client.PageGet(ctx, pageURL, &successPayload)
 
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns all attachments for this issue.  This returns the files&#39; meta data. This does not return the files&#39; actual contents.  The files are always ordered by their upload date.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return PaginatedIssueAttachments*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsGet(ctx context.Context, username string, repoSlug string, issueId int32) (PaginatedIssueAttachments, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns all attachments for this issue.  This returns the files&#39; meta data. This does not return the files&#39; actual contents.  The files are always ordered by their upload date.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return PaginatedIssueAttachments*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsGet(ctx context.Context, username string, repoSlug string, issueId int32) (PaginatedIssueAttachments,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedIssueAttachments
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedIssueAttachments
 	)
 
 	// create path and map variables
@@ -296,8 +293,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -308,7 +306,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -346,23 +344,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Deletes an attachment.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param path
-@param issueId
-@param repoSlug
-@return */
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPathDelete(ctx context.Context, username string, path string, issueId string, repoSlug string) (*http.Response, error) {
+/* IssueTrackerApiService 
+ Deletes an attachment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param path 
+ @param issueId 
+ @param repoSlug 
+ @return */
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPathDelete(ctx context.Context, username string, path string, issueId string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -376,8 +375,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -388,7 +388,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -425,20 +425,20 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	return localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the contents of the specified file attachment.  Note that this endpoint does not return a JSON response, but instead returns a redirect pointing to the actual file that in turn will return the raw contents.  The redirect URL contains a one-time token that has a limited lifetime. As a result, the link should not be persisted, stored, or shared.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param path
-@param issueId
-@param repoSlug
-@return */
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPathGet(ctx context.Context, username string, path string, issueId string, repoSlug string) (*http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the contents of the specified file attachment.  Note that this endpoint does not return a JSON response, but instead returns a redirect pointing to the actual file that in turn will return the raw contents.  The redirect URL contains a one-time token that has a limited lifetime. As a result, the link should not be persisted, stored, or shared.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param path 
+ @param issueId 
+ @param repoSlug 
+ @return */
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPathGet(ctx context.Context, username string, path string, issueId string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -452,8 +452,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -464,7 +465,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -501,19 +502,19 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	return localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Upload new issue attachments.  To upload files, perform a &#x60;multipart/form-data&#x60; POST containing one or more file fields.  When a file is uploaded with the same name as an existing attachment, then the existing file will be replaced.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return */
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPost(ctx context.Context, username string, repoSlug string, issueId int32) (*http.Response, error) {
+/* IssueTrackerApiService 
+ Upload new issue attachments.  To upload files, perform a &#x60;multipart/form-data&#x60; POST containing one or more file fields.  When a file is uploaded with the same name as an existing attachment, then the existing file will be replaced.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return */
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttachmentsPost(ctx context.Context, username string, repoSlug string, issueId int32) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -526,8 +527,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -538,7 +540,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -575,21 +577,21 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 	return localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the specified issue change object.  This resource is only available on repositories that have the issue tracker enabled.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue id
-@param changeId The issue change id
-@return IssueChange*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesChangeIdGet(ctx context.Context, username string, repoSlug string, issueId string, changeId string) (IssueChange, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the specified issue change object.  This resource is only available on repositories that have the issue tracker enabled.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue id
+ @param changeId The issue change id
+ @return IssueChange*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesChangeIdGet(ctx context.Context, username string, repoSlug string, issueId string, changeId string) (IssueChange,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     IssueChange
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  IssueChange
 	)
 
 	// create path and map variables
@@ -603,8 +605,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -615,7 +618,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -653,26 +656,27 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the list of all changes that have been made to the specified issue. Changes are returned in chronological order with the oldest change first.  Each time an issue is edited in the UI or through the API, an immutable change record is created. It also has a comment associated to it.  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes - | jq .  {   \&quot;pagelen\&quot;: 20,   \&quot;values\&quot;: [     {       \&quot;changes\&quot;: {         \&quot;priority\&quot;: {           \&quot;new\&quot;: \&quot;trivial\&quot;,           \&quot;old\&quot;: \&quot;major\&quot;         },         \&quot;assignee\&quot;: {           \&quot;new\&quot;: \&quot;\&quot;,           \&quot;old\&quot;: \&quot;evzijst\&quot;         },         \&quot;kind\&quot;: {           \&quot;new\&quot;: \&quot;enhancement\&quot;,           \&quot;old\&quot;: \&quot;bug\&quot;         }       },       \&quot;links\&quot;: {         \&quot;self\&quot;: {           \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes/2\&quot;         },         \&quot;html\&quot;: {           \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/issues/1#comment-2\&quot;         }       },       \&quot;issue\&quot;: {         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1\&quot;           }         },         \&quot;type\&quot;: \&quot;issue\&quot;,         \&quot;id\&quot;: 1,         \&quot;repository\&quot;: {           \&quot;links\&quot;: {             \&quot;self\&quot;: {               \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow\&quot;             },             \&quot;html\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow\&quot;             },             \&quot;avatar\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/avatar/32/\&quot;             }           },           \&quot;type\&quot;: \&quot;repository\&quot;,           \&quot;name\&quot;: \&quot;dogslow\&quot;,           \&quot;full_name\&quot;: \&quot;evzijst/dogslow\&quot;,           \&quot;uuid\&quot;: \&quot;{988b17c6-1a47-4e70-84ee-854d5f012bf6}\&quot;         },         \&quot;title\&quot;: \&quot;Updated title\&quot;       },       \&quot;created_on\&quot;: \&quot;2018-03-03T00:35:28.353630+00:00\&quot;,       \&quot;user\&quot;: {         \&quot;username\&quot;: \&quot;evzijst\&quot;,         \&quot;display_name\&quot;: \&quot;evzijst\&quot;,         \&quot;type\&quot;: \&quot;user\&quot;,         \&quot;uuid\&quot;: \&quot;{aaa7972b-38af-4fb1-802d-6e3854c95778}\&quot;,         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/users/evzijst\&quot;           },           \&quot;html\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/\&quot;           },           \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/account/evzijst/avatar/32/\&quot;           }         }       },       \&quot;message\&quot;: {         \&quot;raw\&quot;: \&quot;Removed assignee, changed kind and priority.\&quot;,         \&quot;markup\&quot;: \&quot;markdown\&quot;,         \&quot;html\&quot;: \&quot;&lt;p&gt;Removed assignee, changed kind and priority.&lt;/p&gt;\&quot;,         \&quot;type\&quot;: \&quot;rendered\&quot;       },       \&quot;type\&quot;: \&quot;issue_change\&quot;,       \&quot;id\&quot;: 2     }   ],   \&quot;page\&quot;: 1 } &#x60;&#x60;&#x60;  Changes support [filtering and sorting](../../../meta/filtering) that can be used to search for specific changes. For instance, to see when an issue transitioned to \&quot;resolved\&quot;:  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/site/master/issues/1/changes \\    -G --data-urlencode&#x3D;&#39;q&#x3D;changes.state.new &#x3D; \&quot;resolved\&quot;&#39; &#x60;&#x60;&#x60;  This resource is only available on repositories that have the issue tracker enabled.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue id
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "q" (string)  Query string to narrow down the response as per [filtering and sorting](../../../meta/filtering).
-    @param "sort" (string)  Name of a response property to sort the result by as per [filtering and sorting](../../../meta/filtering#query-sort).
-@return PaginatedLogEntries*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesGet(ctx context.Context, username string, repoSlug string, issueId string, localVarOptionals map[string]interface{}) (PaginatedLogEntries, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the list of all changes that have been made to the specified issue. Changes are returned in chronological order with the oldest change first.  Each time an issue is edited in the UI or through the API, an immutable change record is created. It also has a comment associated to it.  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes - | jq .  {   \&quot;pagelen\&quot;: 20,   \&quot;values\&quot;: [     {       \&quot;changes\&quot;: {         \&quot;priority\&quot;: {           \&quot;new\&quot;: \&quot;trivial\&quot;,           \&quot;old\&quot;: \&quot;major\&quot;         },         \&quot;assignee\&quot;: {           \&quot;new\&quot;: \&quot;\&quot;,           \&quot;old\&quot;: \&quot;evzijst\&quot;         },         \&quot;kind\&quot;: {           \&quot;new\&quot;: \&quot;enhancement\&quot;,           \&quot;old\&quot;: \&quot;bug\&quot;         }       },       \&quot;links\&quot;: {         \&quot;self\&quot;: {           \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes/2\&quot;         },         \&quot;html\&quot;: {           \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/issues/1#comment-2\&quot;         }       },       \&quot;issue\&quot;: {         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1\&quot;           }         },         \&quot;type\&quot;: \&quot;issue\&quot;,         \&quot;id\&quot;: 1,         \&quot;repository\&quot;: {           \&quot;links\&quot;: {             \&quot;self\&quot;: {               \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow\&quot;             },             \&quot;html\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow\&quot;             },             \&quot;avatar\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/avatar/32/\&quot;             }           },           \&quot;type\&quot;: \&quot;repository\&quot;,           \&quot;name\&quot;: \&quot;dogslow\&quot;,           \&quot;full_name\&quot;: \&quot;evzijst/dogslow\&quot;,           \&quot;uuid\&quot;: \&quot;{988b17c6-1a47-4e70-84ee-854d5f012bf6}\&quot;         },         \&quot;title\&quot;: \&quot;Updated title\&quot;       },       \&quot;created_on\&quot;: \&quot;2018-03-03T00:35:28.353630+00:00\&quot;,       \&quot;user\&quot;: {         \&quot;username\&quot;: \&quot;evzijst\&quot;,         \&quot;display_name\&quot;: \&quot;evzijst\&quot;,         \&quot;type\&quot;: \&quot;user\&quot;,         \&quot;uuid\&quot;: \&quot;{aaa7972b-38af-4fb1-802d-6e3854c95778}\&quot;,         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/users/evzijst\&quot;           },           \&quot;html\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/\&quot;           },           \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/account/evzijst/avatar/32/\&quot;           }         }       },       \&quot;message\&quot;: {         \&quot;raw\&quot;: \&quot;Removed assignee, changed kind and priority.\&quot;,         \&quot;markup\&quot;: \&quot;markdown\&quot;,         \&quot;html\&quot;: \&quot;&lt;p&gt;Removed assignee, changed kind and priority.&lt;/p&gt;\&quot;,         \&quot;type\&quot;: \&quot;rendered\&quot;       },       \&quot;type\&quot;: \&quot;issue_change\&quot;,       \&quot;id\&quot;: 2     }   ],   \&quot;page\&quot;: 1 } &#x60;&#x60;&#x60;  Changes support [filtering and sorting](../../../meta/filtering) that can be used to search for specific changes. For instance, to see when an issue transitioned to \&quot;resolved\&quot;:  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/site/master/issues/1/changes \\    -G --data-urlencode&#x3D;&#39;q&#x3D;changes.state.new &#x3D; \&quot;resolved\&quot;&#39; &#x60;&#x60;&#x60;  This resource is only available on repositories that have the issue tracker enabled.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue id
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "q" (string)  Query string to narrow down the response as per [filtering and sorting](../../../meta/filtering).
+     @param "sort" (string)  Name of a response property to sort the result by as per [filtering and sorting](../../../meta/filtering#query-sort). 
+ @return PaginatedLogEntries*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesGet(ctx context.Context, username string, repoSlug string, issueId string, localVarOptionals map[string]interface{}) (PaginatedLogEntries,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedLogEntries
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedLogEntries
 	)
 
 	// create path and map variables
@@ -699,7 +703,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 		localVarQueryParams.Add("sort", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -710,7 +714,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -748,24 +752,25 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Makes a change to the specified issue.  For example, to change an issue&#39;s state and assignee, create a new change object that modifies these fields:  &#x60;&#x60;&#x60; curl https://api.bitbucket.org/2.0/site/master/issues/1234/changes \\   -s -u evzijst -X POST -H \&quot;Content-Type: application/json\&quot; \\   -d &#39;{     \&quot;changes\&quot;: {       \&quot;assignee\&quot;: {         \&quot;new\&quot;: \&quot;evzijst\&quot;       },       \&quot;state\&quot;: {         \&quot;new\&quot;: &#39;resolved\&quot;       }     }     \&quot;message\&quot;: {       \&quot;raw\&quot;: \&quot;This is now resolved.\&quot;     }   }&#39; &#x60;&#x60;&#x60;  The above example also includes a custom comment to go alongside the change. This comment will also be visible on the issue page in the UI.  Note that the fields of the &#x60;changes&#x60; object are strings, not objects. This allows for immutable change log records, even after user accounts, milestones, or other objects recorded in a change entry, get renamed or deleted.  The assignee field stores the username. When POSTing a new change and changing the assignee, the client should also use the username in the &#x60;changes.assignee.new&#x60; field.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorization.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param issueId
-@param repoSlug
-@param body The new issue state change. Note that the only required elements are &#x60;changes.[].new&#x60;. All other elements can be omitted from the body.
-@return IssueChange*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesPost(ctx context.Context, username string, issueId string, repoSlug string, body IssueChange) (IssueChange, *http.Response, error) {
+/* IssueTrackerApiService 
+ Makes a change to the specified issue.  For example, to change an issue&#39;s state and assignee, create a new change object that modifies these fields:  &#x60;&#x60;&#x60; curl https://api.bitbucket.org/2.0/site/master/issues/1234/changes \\   -s -u evzijst -X POST -H \&quot;Content-Type: application/json\&quot; \\   -d &#39;{     \&quot;changes\&quot;: {       \&quot;assignee\&quot;: {         \&quot;new\&quot;: \&quot;evzijst\&quot;       },       \&quot;state\&quot;: {         \&quot;new\&quot;: &#39;resolved\&quot;       }     }     \&quot;message\&quot;: {       \&quot;raw\&quot;: \&quot;This is now resolved.\&quot;     }   }&#39; &#x60;&#x60;&#x60;  The above example also includes a custom comment to go alongside the change. This comment will also be visible on the issue page in the UI.  Note that the fields of the &#x60;changes&#x60; object are strings, not objects. This allows for immutable change log records, even after user accounts, milestones, or other objects recorded in a change entry, get renamed or deleted.  The assignee field stores the username. When POSTing a new change and changing the assignee, the client should also use the username in the &#x60;changes.assignee.new&#x60; field.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorization.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param issueId 
+ @param repoSlug 
+ @param body The new issue state change. Note that the only required elements are &#x60;changes.[].new&#x60;. All other elements can be omitted from the body.
+ @return IssueChange*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesPost(ctx context.Context, username string, issueId string, repoSlug string, body IssueChange) (IssueChange,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     IssueChange
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  IssueChange
 	)
 
 	// create path and map variables
@@ -778,8 +783,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -790,7 +796,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -830,24 +836,25 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the specified issue comment object.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param commentId
-@param issueId
-@param repoSlug
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdGet(ctx context.Context, username string, commentId string, issueId string, repoSlug string) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the specified issue comment object.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param commentId 
+ @param issueId 
+ @param repoSlug 
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdGet(ctx context.Context, username string, commentId string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -861,8 +868,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -873,7 +881,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -911,23 +919,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns all comments that were made on the specified issue.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param issueId
-@param repoSlug
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsGet(ctx context.Context, username string, issueId string, repoSlug string) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns all comments that were made on the specified issue.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param issueId 
+ @param repoSlug 
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsGet(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -940,8 +949,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -952,7 +962,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -990,23 +1000,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Deletes the specified issue. This requires write access to the repository.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param issueId
-@param repoSlug
-@return Issue*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete(ctx context.Context, username string, issueId string, repoSlug string) (Issue, *http.Response, error) {
+/* IssueTrackerApiService 
+ Deletes the specified issue. This requires write access to the repository.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param issueId 
+ @param repoSlug 
+ @return Issue*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete(ctx context.Context, username string, issueId string, repoSlug string) (Issue,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Issue
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Issue
 	)
 
 	// create path and map variables
@@ -1019,8 +1030,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1031,7 +1043,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1069,23 +1081,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the specified issue.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param issueId
-@param repoSlug
-@return Issue*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ctx context.Context, username string, issueId string, repoSlug string) (Issue, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the specified issue.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param issueId 
+ @param repoSlug 
+ @return Issue*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ctx context.Context, username string, issueId string, repoSlug string) (Issue,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Issue
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Issue
 	)
 
 	// create path and map variables
@@ -1098,8 +1111,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ct
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1110,7 +1124,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ct
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1148,23 +1162,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ct
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Modifies the issue.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repostories/evzijst/dogslow/issues/123 \\   -u evzijst -s -X PUT -H &#39;Content-Type: application/json&#39; \\   -d &#39;{   \&quot;title\&quot;: \&quot;Updated title\&quot;,   \&quot;assignee\&quot;: {     \&quot;username\&quot;: \&quot;evzijst\&quot;   },   \&quot;priority\&quot;: \&quot;minor\&quot;,   \&quot;version\&quot;: {     \&quot;name\&quot;: \&quot;1.0\&quot;   },   \&quot;component\&quot;: null }&#39; &#x60;&#x60;&#x60;  The example above changes the &#x60;title&#x60;, &#x60;assignee&#x60;, &#x60;priority&#x60; and the &#x60;version&#x60;. It also removes the &#x60;component&#x60; from the issue by setting the field explicitly to &#x60;null&#x60;. Any field that is not present will keep its existing value.  Note that the issue tracker keeps a list of all modifications made to an issue under the &#x60;/issues/123/changes&#x60; endpoint and a PUT to this endpoint will create a new changes record.  Issues can also be manipulated by POSTing directly to the issue &#x60;/changes&#x60; endpoint. This is equivalent to a PUT here, except that the client is able to provide a message that will be stored alongside the change record.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue id
-@return Issue*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ctx context.Context, username string, repoSlug string, issueId string) (Issue, *http.Response, error) {
+/* IssueTrackerApiService 
+ Modifies the issue.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repostories/evzijst/dogslow/issues/123 \\   -u evzijst -s -X PUT -H &#39;Content-Type: application/json&#39; \\   -d &#39;{   \&quot;title\&quot;: \&quot;Updated title\&quot;,   \&quot;assignee\&quot;: {     \&quot;username\&quot;: \&quot;evzijst\&quot;   },   \&quot;priority\&quot;: \&quot;minor\&quot;,   \&quot;version\&quot;: {     \&quot;name\&quot;: \&quot;1.0\&quot;   },   \&quot;component\&quot;: null }&#39; &#x60;&#x60;&#x60;  The example above changes the &#x60;title&#x60;, &#x60;assignee&#x60;, &#x60;priority&#x60; and the &#x60;version&#x60;. It also removes the &#x60;component&#x60; from the issue by setting the field explicitly to &#x60;null&#x60;. Any field that is not present will keep its existing value.  Note that the issue tracker keeps a list of all modifications made to an issue under the &#x60;/issues/123/changes&#x60; endpoint and a PUT to this endpoint will create a new changes record.  Issues can also be manipulated by POSTing directly to the issue &#x60;/changes&#x60; endpoint. This is equivalent to a PUT here, except that the client is able to provide a message that will be stored alongside the change record.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue id
+ @return Issue*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ctx context.Context, username string, repoSlug string, issueId string) (Issue,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Issue
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Issue
 	)
 
 	// create path and map variables
@@ -1177,8 +1192,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ct
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1189,7 +1205,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ct
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1227,23 +1243,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ct
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Retract your vote.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Retract your vote.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1256,8 +1273,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1268,7 +1286,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDe
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1306,23 +1324,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDe
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Check whether the authenticated user has voted for this issue. A 204 status code indicates that the user has voted, while a 404 implies they haven&#39;t.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Check whether the authenticated user has voted for this issue. A 204 status code indicates that the user has voted, while a 404 implies they haven&#39;t.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1335,8 +1354,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1347,7 +1367,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGe
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1385,23 +1405,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGe
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Vote for this issue.  To cast your vote, do an empty PUT. The 204 status code indicates that the operation was successful.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Vote for this issue.  To cast your vote, do an empty PUT. The 204 status code indicates that the operation was successful.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1414,8 +1435,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePu
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1426,7 +1448,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePu
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1464,23 +1486,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePu
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Stop watching this issue.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Stop watching this issue.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1493,8 +1516,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchD
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1505,7 +1529,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchD
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1543,23 +1567,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchD
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Indicated whether or not the authenticated user is watching this issue.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Indicated whether or not the authenticated user is watching this issue.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1572,8 +1597,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchG
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1584,7 +1610,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchG
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1622,23 +1648,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchG
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Start watching this issue.  To start watching this issue, do an empty PUT. The 204 status code indicates that the operation was successful.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param issueId The issue&#39;s id
-@return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchPut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError, *http.Response, error) {
+/* IssueTrackerApiService 
+ Start watching this issue.  To start watching this issue, do an empty PUT. The 204 status code indicates that the operation was successful.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param issueId The issue&#39;s id
+ @return ModelError*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchPut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1651,8 +1678,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchP
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1663,7 +1691,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchP
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1701,23 +1729,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchP
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Creates a new issue.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorisation.  The authenticated user is used for the issue&#39;s &#x60;reporter&#x60; field.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param body The new issue. Note that the only required element is &#x60;title&#x60;. All other elements can be omitted from the body.
-@return Issue*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx context.Context, username string, repoSlug string, body Issue) (Issue, *http.Response, error) {
+/* IssueTrackerApiService 
+ Creates a new issue.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorisation.  The authenticated user is used for the issue&#39;s &#x60;reporter&#x60; field.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param body The new issue. Note that the only required element is &#x60;title&#x60;. All other elements can be omitted from the body.
+ @return Issue*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx context.Context, username string, repoSlug string, body Issue) (Issue,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Issue
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Issue
 	)
 
 	// create path and map variables
@@ -1729,8 +1758,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx cont
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1741,7 +1771,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx cont
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1781,22 +1811,23 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx cont
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the milestones that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@return PaginatedMilestones*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx context.Context, username string, repoSlug string) (PaginatedMilestones, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the milestones that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @return PaginatedMilestones*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx context.Context, username string, repoSlug string) (PaginatedMilestones,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedMilestones
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedMilestones
 	)
 
 	// create path and map variables
@@ -1808,8 +1839,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx c
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1820,7 +1852,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx c
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1858,23 +1890,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx c
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the specified issue tracker milestone object.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param milestoneId The milestone&#39;s id
-@return Milestone*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestoneIdGet(ctx context.Context, username string, repoSlug string, milestoneId int32) (Milestone, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the specified issue tracker milestone object.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param milestoneId The milestone&#39;s id
+ @return Milestone*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestoneIdGet(ctx context.Context, username string, repoSlug string, milestoneId int32) (Milestone,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Milestone
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Milestone
 	)
 
 	// create path and map variables
@@ -1887,8 +1920,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestone
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1899,7 +1933,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestone
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1937,22 +1971,23 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestone
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the versions that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@return PaginatedVersions*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx context.Context, username string, repoSlug string) (PaginatedVersions, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the versions that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @return PaginatedVersions*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx context.Context, username string, repoSlug string) (PaginatedVersions,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedVersions
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedVersions
 	)
 
 	// create path and map variables
@@ -1964,8 +1999,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx con
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1976,7 +2012,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx con
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -2014,23 +2050,24 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx con
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* IssueTrackerApiService
-Returns the specified issue tracker version object.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param versionId The version&#39;s id
-@return Version*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGet(ctx context.Context, username string, repoSlug string, versionId int32) (Version, *http.Response, error) {
+/* IssueTrackerApiService 
+ Returns the specified issue tracker version object.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param repoSlug 
+ @param versionId The version&#39;s id
+ @return Version*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGet(ctx context.Context, username string, repoSlug string, versionId int32) (Version,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Version
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Version
 	)
 
 	// create path and map variables
@@ -2043,8 +2080,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -2055,7 +2093,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGe
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -2093,5 +2131,7 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGe
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
+
