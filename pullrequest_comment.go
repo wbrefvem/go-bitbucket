@@ -24,7 +24,7 @@ type PullrequestComment struct {
 
 	UpdatedOn time.Time `json:"updated_on,omitempty"`
 
-	Content *PullrequestSummary `json:"content,omitempty"`
+	Content *IssueContent `json:"content,omitempty"`
 
 	User *User `json:"user,omitempty"`
 
@@ -36,5 +36,5 @@ type PullrequestComment struct {
 
 	Links *CommentLinks `json:"links,omitempty"`
 
-	PullRequest *Pullrequest `json:"pull_request,omitempty"`
+	Pullrequest *Pullrequest `json:"pullrequest,omitempty"`
 }

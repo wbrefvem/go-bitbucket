@@ -792,3 +792,76 @@ func (a *AddonApiService) AddonPut(ctx context.Context) (ModelError,  *http.Resp
 	return successPayload, localVarHttpResponse, err
 }
 
+/* AddonApiService 
+ POST a new custom event.  The data within the event body will be hydrated by Bitbucket. For example, the following event submission would result in subscribers for the event receiving the full repository object corresponding to the UUID.  &#x60;&#x60;&#x60; $ curl -X POST -H \&quot;Content-Type: application/json\&quot; -d &#39;{     \&quot;mynumdata\&quot;: \&quot;12345\&quot;,     \&quot;repository\&quot;: {         \&quot;type\&quot;: \&quot;repository\&quot;,         \&quot;uuid\&quot;: \&quot;{be95aa1f-c0b2-47f6-99d1-bf5d3a0f850f}\&quot; }}&#39; https://api.bitbucket.org/2.0/addon/users/myuser/events/com.example.app%3Amyevent &#x60;&#x60;&#x60;  Use the optional &#x60;fields&#x60; property of the custom event Connect module where the event is defined to add additional fields to the expanded payload sent to listeners.  For example, the &#x60;customEvents&#x60; module in the app descriptor for the previous example would look like this:  &#x60;&#x60;&#x60; &#39;modules&#39;: {     &#39;customEvents&#39;: {         &#39;com.example.app:myevent&#39;: {             &#39;schema&#39;: {                 &#39;properties&#39;: {                     &#39;mynumdata&#39;: {&#39;type&#39;: &#39;number&#39;},                     &#39;repository&#39;: {&#39;$ref&#39;: &#39;#/definitions/repository&#39;}                 }             },             &#39;fields&#39;: [&#39;repository.owner&#39;]         }     } } &#x60;&#x60;&#x60;  By specifying fields as above, the repository owner will also be sent to subscribers of the event.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param targetUser The account the app is installed in.  This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param eventKey The key of the event, which corresponds to an event defined in the connect app descriptor. 
+ @return */
+func (a *AddonApiService) AddonUsersTargetUserEventsEventKeyPost(ctx context.Context, targetUser string, eventKey string) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/addon/users/{target_user}/events/{event_key}"
+	localVarPath = strings.Replace(localVarPath, "{"+"target_user"+"}", fmt.Sprintf("%v", targetUser), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"event_key"+"}", fmt.Sprintf("%v", eventKey), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+

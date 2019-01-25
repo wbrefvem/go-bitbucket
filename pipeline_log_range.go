@@ -13,9 +13,9 @@ package bitbucket
 // A reference to a range of bytes in a log file (does not contain the actual bytes).
 type PipelineLogRange struct {
 
-	// The position of the last byte of the range in the log.
-	LastBytePosition int32 `json:"last_byte_position,omitempty"`
-
 	// The position of the first byte of the range in the log.
 	FirstBytePosition int32 `json:"first_byte_position,omitempty"`
+
+	// The position of the last byte of the range in the log.
+	LastBytePosition int32 `json:"last_byte_position,omitempty"`
 }

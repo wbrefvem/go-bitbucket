@@ -18,27 +18,27 @@ type PipelineStep struct {
 
 	Type_ string `json:"type"`
 
-	// The timestamp when the step execution was completed. This is not set if the step is still in progress.
-	CompletedOn time.Time `json:"completed_on,omitempty"`
-
-	// The amount of bytes of the log file that is available.
-	LogByteCount int32 `json:"logByteCount,omitempty"`
-
-	// The Docker image used as the build container for the step.
-	Image *PipelineImage `json:"image,omitempty"`
+	// The UUID identifying the step.
+	Uuid string `json:"uuid,omitempty"`
 
 	// The timestamp when the step execution was started. This is not set when the step hasn't executed yet.
 	StartedOn time.Time `json:"started_on,omitempty"`
 
-	// The list of build commands. These commands are executed in the build container.
-	ScriptCommands []PipelineCommand `json:"script_commands,omitempty"`
+	// The timestamp when the step execution was completed. This is not set if the step is still in progress.
+	CompletedOn time.Time `json:"completed_on,omitempty"`
 
 	// The current state of the step
 	State *PipelineStepState `json:"state,omitempty"`
 
+	// The Docker image used as the build container for the step.
+	Image *PipelineImage `json:"image,omitempty"`
+
 	// The list of commands that are executed as part of the setup phase of the build. These commands are executed outside the build container.
 	SetupCommands []PipelineCommand `json:"setup_commands,omitempty"`
 
-	// The UUID identifying the step.
-	Uuid string `json:"uuid,omitempty"`
+	// The list of build commands. These commands are executed in the build container.
+	ScriptCommands []PipelineCommand `json:"script_commands,omitempty"`
+
+	// The amount of bytes of the log file that is available.
+	LogByteCount int32 `json:"logByteCount,omitempty"`
 }

@@ -13,4 +13,10 @@ package bitbucket
 type PullrequestEndpointBranch struct {
 
 	Name string `json:"name,omitempty"`
+
+	// Available merge strategies, when this endpoint is the destination of the pull request.
+	MergeStrategies []string `json:"merge_strategies,omitempty"`
+
+	// The default merge strategy, when this endpoint is the destination of the pull request.
+	DefaultMergeStrategy string `json:"default_merge_strategy,omitempty"`
 }

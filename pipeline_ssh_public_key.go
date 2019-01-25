@@ -17,12 +17,12 @@ type PipelineSshPublicKey struct {
 	// The type of the public key.
 	KeyType string `json:"key_type,omitempty"`
 
+	// The base64 encoded public key.
+	Key string `json:"key,omitempty"`
+
 	// The MD5 fingerprint of the public key.
 	Md5Fingerprint string `json:"md5_fingerprint,omitempty"`
 
 	// The SHA-256 fingerprint of the public key.
 	Sha256Fingerprint string `json:"sha256_fingerprint,omitempty"`
-
-	// The base64 encoded public key.
-	Key string `json:"key,omitempty"`
 }

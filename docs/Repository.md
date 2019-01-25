@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **HasWiki** | **bool** |  | [optional] [default to null]
 **ForkPolicy** | **string** |  Controls the rules for forking this repository.  * **allow_forks**: unrestricted forking * **no_public_forks**: restrict forking to private forks (forks cannot   be made public later) * **no_forks**: deny all forking  | [optional] [default to null]
 **Project** | [***Project**](project.md) |  | [optional] [default to null]
+**Mainbranch** | [***Branch**](branch.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -31,11 +31,11 @@ type IssueTrackerApiService service
 /* IssueTrackerApiService 
  Returns the specified issue tracker component object.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param componentId The component&#39;s id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return Component*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponentIdGet(ctx context.Context, username string, repoSlug string, componentId int32) (Component,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponentIdGet(ctx context.Context, username string, componentId int32, repoSlug string) (Component,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -47,8 +47,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponent
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/components/{component_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"component_id"+"}", fmt.Sprintf("%v", componentId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -112,8 +112,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsComponent
 /* IssueTrackerApiService 
  Returns the components that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return PaginatedComponents*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx context.Context, username string, repoSlug string) (PaginatedComponents,  *http.Response, error) {
 	var (
@@ -191,8 +191,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugComponentsGet(ctx c
 /* IssueTrackerApiService 
  Returns the issues in the issue tracker.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return PaginatedIssues*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesGet(ctx context.Context, username string, repoSlug string) (PaginatedIssues,  *http.Response, error) {
 	var (
@@ -580,12 +580,12 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdAttach
 /* IssueTrackerApiService 
  Returns the specified issue change object.  This resource is only available on repositories that have the issue tracker enabled.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param changeId The issue change id
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return IssueChange*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesChangeIdGet(ctx context.Context, username string, repoSlug string, issueId string, changeId string) (IssueChange,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesChangeIdGet(ctx context.Context, username string, changeId string, issueId string, repoSlug string) (IssueChange,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -597,9 +597,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/changes/{change_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"change_id"+"}", fmt.Sprintf("%v", changeId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -661,16 +661,16 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 }
 
 /* IssueTrackerApiService 
- Returns the list of all changes that have been made to the specified issue. Changes are returned in chronological order with the oldest change first.  Each time an issue is edited in the UI or through the API, an immutable change record is created. It also has a comment associated to it.  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes - | jq .  {   \&quot;pagelen\&quot;: 20,   \&quot;values\&quot;: [     {       \&quot;changes\&quot;: {         \&quot;priority\&quot;: {           \&quot;new\&quot;: \&quot;trivial\&quot;,           \&quot;old\&quot;: \&quot;major\&quot;         },         \&quot;assignee\&quot;: {           \&quot;new\&quot;: \&quot;\&quot;,           \&quot;old\&quot;: \&quot;evzijst\&quot;         },         \&quot;kind\&quot;: {           \&quot;new\&quot;: \&quot;enhancement\&quot;,           \&quot;old\&quot;: \&quot;bug\&quot;         }       },       \&quot;links\&quot;: {         \&quot;self\&quot;: {           \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes/2\&quot;         },         \&quot;html\&quot;: {           \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/issues/1#comment-2\&quot;         }       },       \&quot;issue\&quot;: {         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1\&quot;           }         },         \&quot;type\&quot;: \&quot;issue\&quot;,         \&quot;id\&quot;: 1,         \&quot;repository\&quot;: {           \&quot;links\&quot;: {             \&quot;self\&quot;: {               \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow\&quot;             },             \&quot;html\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow\&quot;             },             \&quot;avatar\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/avatar/32/\&quot;             }           },           \&quot;type\&quot;: \&quot;repository\&quot;,           \&quot;name\&quot;: \&quot;dogslow\&quot;,           \&quot;full_name\&quot;: \&quot;evzijst/dogslow\&quot;,           \&quot;uuid\&quot;: \&quot;{988b17c6-1a47-4e70-84ee-854d5f012bf6}\&quot;         },         \&quot;title\&quot;: \&quot;Updated title\&quot;       },       \&quot;created_on\&quot;: \&quot;2018-03-03T00:35:28.353630+00:00\&quot;,       \&quot;user\&quot;: {         \&quot;username\&quot;: \&quot;evzijst\&quot;,         \&quot;display_name\&quot;: \&quot;evzijst\&quot;,         \&quot;type\&quot;: \&quot;user\&quot;,         \&quot;uuid\&quot;: \&quot;{aaa7972b-38af-4fb1-802d-6e3854c95778}\&quot;,         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/users/evzijst\&quot;           },           \&quot;html\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/\&quot;           },           \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/account/evzijst/avatar/32/\&quot;           }         }       },       \&quot;message\&quot;: {         \&quot;raw\&quot;: \&quot;Removed assignee, changed kind and priority.\&quot;,         \&quot;markup\&quot;: \&quot;markdown\&quot;,         \&quot;html\&quot;: \&quot;&lt;p&gt;Removed assignee, changed kind and priority.&lt;/p&gt;\&quot;,         \&quot;type\&quot;: \&quot;rendered\&quot;       },       \&quot;type\&quot;: \&quot;issue_change\&quot;,       \&quot;id\&quot;: 2     }   ],   \&quot;page\&quot;: 1 } &#x60;&#x60;&#x60;  Changes support [filtering and sorting](../../../meta/filtering) that can be used to search for specific changes. For instance, to see when an issue transitioned to \&quot;resolved\&quot;:  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/site/master/issues/1/changes \\    -G --data-urlencode&#x3D;&#39;q&#x3D;changes.state.new &#x3D; \&quot;resolved\&quot;&#39; &#x60;&#x60;&#x60;  This resource is only available on repositories that have the issue tracker enabled.
+ Returns the list of all changes that have been made to the specified issue. Changes are returned in chronological order with the oldest change first.  Each time an issue is edited in the UI or through the API, an immutable change record is created under the &#x60;/issues/123/changes&#x60; endpoint. It also has a comment associated with the change.  Note that this operation is changing significantly, due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#changes-to-the-issue-changes-api) for details.  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes - | jq .  {   \&quot;pagelen\&quot;: 20,   \&quot;values\&quot;: [     {       \&quot;changes\&quot;: {         \&quot;priority\&quot;: {           \&quot;new\&quot;: \&quot;trivial\&quot;,           \&quot;old\&quot;: \&quot;major\&quot;         },         \&quot;assignee\&quot;: {           \&quot;new\&quot;: \&quot;\&quot;,           \&quot;old\&quot;: \&quot;evzijst\&quot;         },         \&quot;assignee_account_id\&quot;: {           \&quot;new\&quot;: \&quot;\&quot;,           \&quot;old\&quot;: \&quot;557058:c0b72ad0-1cb5-4018-9cdc-0cde8492c443\&quot;         },         \&quot;kind\&quot;: {           \&quot;new\&quot;: \&quot;enhancement\&quot;,           \&quot;old\&quot;: \&quot;bug\&quot;         }       },       \&quot;links\&quot;: {         \&quot;self\&quot;: {           \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1/changes/2\&quot;         },         \&quot;html\&quot;: {           \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/issues/1#comment-2\&quot;         }       },       \&quot;issue\&quot;: {         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow/issues/1\&quot;           }         },         \&quot;type\&quot;: \&quot;issue\&quot;,         \&quot;id\&quot;: 1,         \&quot;repository\&quot;: {           \&quot;links\&quot;: {             \&quot;self\&quot;: {               \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/repositories/evzijst/dogslow\&quot;             },             \&quot;html\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow\&quot;             },             \&quot;avatar\&quot;: {               \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/dogslow/avatar/32/\&quot;             }           },           \&quot;type\&quot;: \&quot;repository\&quot;,           \&quot;name\&quot;: \&quot;dogslow\&quot;,           \&quot;full_name\&quot;: \&quot;evzijst/dogslow\&quot;,           \&quot;uuid\&quot;: \&quot;{988b17c6-1a47-4e70-84ee-854d5f012bf6}\&quot;         },         \&quot;title\&quot;: \&quot;Updated title\&quot;       },       \&quot;created_on\&quot;: \&quot;2018-03-03T00:35:28.353630+00:00\&quot;,       \&quot;user\&quot;: {         \&quot;username\&quot;: \&quot;evzijst\&quot;,         \&quot;nickname\&quot;: \&quot;evzijst\&quot;,         \&quot;display_name\&quot;: \&quot;evzijst\&quot;,         \&quot;type\&quot;: \&quot;user\&quot;,         \&quot;uuid\&quot;: \&quot;{aaa7972b-38af-4fb1-802d-6e3854c95778}\&quot;,         \&quot;links\&quot;: {           \&quot;self\&quot;: {             \&quot;href\&quot;: \&quot;https://api.bitbucket.org/2.0/users/evzijst\&quot;           },           \&quot;html\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/evzijst/\&quot;           },           \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;https://bitbucket.org/account/evzijst/avatar/32/\&quot;           }         }       },       \&quot;message\&quot;: {         \&quot;raw\&quot;: \&quot;Removed assignee, changed kind and priority.\&quot;,         \&quot;markup\&quot;: \&quot;markdown\&quot;,         \&quot;html\&quot;: \&quot;&lt;p&gt;Removed assignee, changed kind and priority.&lt;/p&gt;\&quot;,         \&quot;type\&quot;: \&quot;rendered\&quot;       },       \&quot;type\&quot;: \&quot;issue_change\&quot;,       \&quot;id\&quot;: 2     }   ],   \&quot;page\&quot;: 1 } &#x60;&#x60;&#x60;  Changes support [filtering and sorting](../../../meta/filtering) that can be used to search for specific changes. For instance, to see when an issue transitioned to \&quot;resolved\&quot;:  &#x60;&#x60;&#x60; $ curl -s https://api.bitbucket.org/2.0/repositories/site/master/issues/1/changes \\    -G --data-urlencode&#x3D;&#39;q&#x3D;changes.state.new &#x3D; \&quot;resolved\&quot;&#39; &#x60;&#x60;&#x60;  This resource is only available on repositories that have the issue tracker enabled.  N.B.  The &#x60;changes.assignee&#x60; and &#x60;changes.assignee_account_id&#x60; fields are not a &#x60;user&#x60; object. Instead, they contain the raw &#x60;username&#x60; and &#x60;account_id&#x60; of the user. This is to protect the integrity of the audit log even after a user account gets deleted.  The &#x60;changes.assignee&#x60; field is deprecated will disappear in the future. Use &#x60;changes.assignee_account_id&#x60; instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "q" (string)  Query string to narrow down the response as per [filtering and sorting](../../../meta/filtering).
-     @param "sort" (string)  Name of a response property to sort the result by as per [filtering and sorting](../../../meta/filtering#query-sort). 
+     @param "q" (string)  Query string to narrow down the response. See [filtering and sorting](../../../meta/filtering) for details.
+     @param "sort" (string)  Name of a response property to sort results. See [filtering and sorting](../../../meta/filtering#query-sort) for details. 
  @return PaginatedLogEntries*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesGet(ctx context.Context, username string, repoSlug string, issueId string, localVarOptionals map[string]interface{}) (PaginatedLogEntries,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesGet(ctx context.Context, username string, issueId string, repoSlug string, localVarOptionals map[string]interface{}) (PaginatedLogEntries,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -682,8 +682,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/changes"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -757,12 +757,12 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 }
 
 /* IssueTrackerApiService 
- Makes a change to the specified issue.  For example, to change an issue&#39;s state and assignee, create a new change object that modifies these fields:  &#x60;&#x60;&#x60; curl https://api.bitbucket.org/2.0/site/master/issues/1234/changes \\   -s -u evzijst -X POST -H \&quot;Content-Type: application/json\&quot; \\   -d &#39;{     \&quot;changes\&quot;: {       \&quot;assignee\&quot;: {         \&quot;new\&quot;: \&quot;evzijst\&quot;       },       \&quot;state\&quot;: {         \&quot;new\&quot;: &#39;resolved\&quot;       }     }     \&quot;message\&quot;: {       \&quot;raw\&quot;: \&quot;This is now resolved.\&quot;     }   }&#39; &#x60;&#x60;&#x60;  The above example also includes a custom comment to go alongside the change. This comment will also be visible on the issue page in the UI.  Note that the fields of the &#x60;changes&#x60; object are strings, not objects. This allows for immutable change log records, even after user accounts, milestones, or other objects recorded in a change entry, get renamed or deleted.  The assignee field stores the username. When POSTing a new change and changing the assignee, the client should also use the username in the &#x60;changes.assignee.new&#x60; field.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorization.
+ Makes a change to the specified issue.  For example, to change an issue&#39;s state and assignee, create a new change object that modifies these fields:  &#x60;&#x60;&#x60; curl https://api.bitbucket.org/2.0/site/master/issues/1234/changes \\   -s -u evzijst -X POST -H \&quot;Content-Type: application/json\&quot; \\   -d &#39;{     \&quot;changes\&quot;: {       \&quot;assignee_account_id\&quot;: {         \&quot;new\&quot;: \&quot;557058:c0b72ad0-1cb5-4018-9cdc-0cde8492c443\&quot;       },       \&quot;state\&quot;: {         \&quot;new\&quot;: &#39;resolved\&quot;       }     }     \&quot;message\&quot;: {       \&quot;raw\&quot;: \&quot;This is now resolved.\&quot;     }   }&#39; &#x60;&#x60;&#x60;  The above example also includes a custom comment to go alongside the change. This comment will also be visible on the issue page in the UI.  The fields of the &#x60;changes&#x60; object are strings, not objects. This allows for immutable change log records, even after user accounts, milestones, or other objects recorded in a change entry, get renamed or deleted.  The &#x60;assignee_account_id&#x60; field stores the account id. When POSTing a new change and changing the assignee, the client should therefore use the user&#39;s account_id in the &#x60;changes.assignee_account_id.new&#x60; field.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorization.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param issueId 
- @param repoSlug 
- @param body The new issue state change. Note that the only required elements are &#x60;changes.[].new&#x60;. All other elements can be omitted from the body.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param body The new issue state change. The only required elements are &#x60;changes.[].new&#x60;. All other elements can be omitted from the body.
  @return IssueChange*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChangesPost(ctx context.Context, username string, issueId string, repoSlug string, body IssueChange) (IssueChange,  *http.Response, error) {
 	var (
@@ -841,28 +841,108 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdChange
 }
 
 /* IssueTrackerApiService 
+ Deletes the specified comment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param commentId 
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param issueId The ID of the issue that is being queried. 
+ @param body The updated comment.
+ @return */
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdDelete(ctx context.Context, commentId string, username string, repoSlug string, issueId string, body IssueComment) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
+/* IssueTrackerApiService 
  Returns the specified issue comment object.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
  @param commentId 
- @param issueId 
- @param repoSlug 
- @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdGet(ctx context.Context, username string, commentId string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param issueId The ID of the issue that is being queried. 
+ @return IssueComment*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdGet(ctx context.Context, commentId string, username string, repoSlug string, issueId string) (IssueComment,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  ModelError
+	 	successPayload  IssueComment
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -924,32 +1004,126 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 }
 
 /* IssueTrackerApiService 
- Returns all comments that were made on the specified issue.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.
+ Updates the content of the specified issue comment. Note that only the &#x60;content.raw&#x60; field can be modified.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repositories/atlassian/prlinks/issues/42/comments/5728901 \\   -X PUT -u evzijst \\   -H &#39;Content-Type: application/json&#39; \\   -d &#39;{\&quot;content\&quot;: {\&quot;raw\&quot;: \&quot;Lorem ipsum.\&quot;}&#39; &#x60;&#x60;&#x60;
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param issueId 
- @param repoSlug 
- @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsGet(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
+ @param commentId 
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param issueId The ID of the issue that is being queried. 
+ @param body The updated comment.
+ @return IssueComment*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdPut(ctx context.Context, commentId string, username string, repoSlug string, issueId string, body IssueComment) (IssueComment,  *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
+		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  ModelError
+	 	successPayload  IssueComment
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments"
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* IssueTrackerApiService 
+ Returns a paginated list of all comments that were made on the specified issue.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../../../meta/filtering) for more details.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param issueId 
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "q" (string)  Query string to narrow down the response as per [filtering and sorting](../../../../../../meta/filtering).
+ @return PaginatedIssueComments*/
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsGet(ctx context.Context, issueId string, username string, repoSlug string, localVarOptionals map[string]interface{}) (PaginatedIssueComments,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedIssueComments
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments"
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if err := typeCheckParameter(localVarOptionals["q"], "string", "q"); err != nil {
+		return successPayload, nil, err
+	}
+
+	if localVarTempParam, localVarOk := localVarOptionals["q"].(string); localVarOk {
+		localVarQueryParams.Add("q", parameterToString(localVarTempParam, ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }
 
@@ -1002,14 +1176,92 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommen
 
 
 	return successPayload, localVarHttpResponse, err
+}
+
+/* IssueTrackerApiService 
+ Creates a new issue comment.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repositories/atlassian/prlinks/issues/42/comments/ \\   -X POST -u evzijst \\   -H &#39;Content-Type: application/json&#39; \\   -d &#39;{\&quot;content\&quot;: {\&quot;raw\&quot;: \&quot;Lorem ipsum.\&quot;}}&#39; &#x60;&#x60;&#x60;
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param issueId 
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param body The new issue comment object.
+ @return */
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdCommentsPost(ctx context.Context, issueId string, username string, repoSlug string, body IssueComment) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/comments"
+	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
 }
 
 /* IssueTrackerApiService 
  Deletes the specified issue. This requires write access to the repository.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param issueId 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return Issue*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete(ctx context.Context, username string, issueId string, repoSlug string) (Issue,  *http.Response, error) {
 	var (
@@ -1088,9 +1340,9 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdDelete
 /* IssueTrackerApiService 
  Returns the specified issue.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param issueId 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return Issue*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ctx context.Context, username string, issueId string, repoSlug string) (Issue,  *http.Response, error) {
 	var (
@@ -1167,13 +1419,13 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdGet(ct
 }
 
 /* IssueTrackerApiService 
- Modifies the issue.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repostories/evzijst/dogslow/issues/123 \\   -u evzijst -s -X PUT -H &#39;Content-Type: application/json&#39; \\   -d &#39;{   \&quot;title\&quot;: \&quot;Updated title\&quot;,   \&quot;assignee\&quot;: {     \&quot;username\&quot;: \&quot;evzijst\&quot;   },   \&quot;priority\&quot;: \&quot;minor\&quot;,   \&quot;version\&quot;: {     \&quot;name\&quot;: \&quot;1.0\&quot;   },   \&quot;component\&quot;: null }&#39; &#x60;&#x60;&#x60;  The example above changes the &#x60;title&#x60;, &#x60;assignee&#x60;, &#x60;priority&#x60; and the &#x60;version&#x60;. It also removes the &#x60;component&#x60; from the issue by setting the field explicitly to &#x60;null&#x60;. Any field that is not present will keep its existing value.  Note that the issue tracker keeps a list of all modifications made to an issue under the &#x60;/issues/123/changes&#x60; endpoint and a PUT to this endpoint will create a new changes record.  Issues can also be manipulated by POSTing directly to the issue &#x60;/changes&#x60; endpoint. This is equivalent to a PUT here, except that the client is able to provide a message that will be stored alongside the change record.
+ Modifies the issue.  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repostories/evzijst/dogslow/issues/123 \\   -u evzijst -s -X PUT -H &#39;Content-Type: application/json&#39; \\   -d &#39;{   \&quot;title\&quot;: \&quot;Updated title\&quot;,   \&quot;assignee\&quot;: {     \&quot;username\&quot;: \&quot;evzijst\&quot;   },   \&quot;priority\&quot;: \&quot;minor\&quot;,   \&quot;version\&quot;: {     \&quot;name\&quot;: \&quot;1.0\&quot;   },   \&quot;component\&quot;: null }&#39; &#x60;&#x60;&#x60;  This example changes the &#x60;title&#x60;, &#x60;assignee&#x60;, &#x60;priority&#x60; and the &#x60;version&#x60;. It also removes the value of the &#x60;component&#x60; from the issue by setting the field to &#x60;null&#x60;. Any field not present keeps its existing value.  Each time an issue is edited in the UI or through the API, an immutable change record is created under the &#x60;/issues/123/changes&#x60; endpoint. It also has a comment associated with the change.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return Issue*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ctx context.Context, username string, repoSlug string, issueId string) (Issue,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ctx context.Context, username string, issueId string, repoSlug string) (Issue,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody interface{}
@@ -1185,8 +1437,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ct
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1250,11 +1502,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdPut(ct
 /* IssueTrackerApiService 
  Retract your vote.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDelete(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody interface{}
@@ -1266,8 +1518,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDe
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/vote"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1331,11 +1583,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteDe
 /* IssueTrackerApiService 
  Check whether the authenticated user has voted for this issue. A 204 status code indicates that the user has voted, while a 404 implies they haven&#39;t.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGet(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -1347,8 +1599,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGe
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/vote"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1412,11 +1664,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVoteGe
 /* IssueTrackerApiService 
  Vote for this issue.  To cast your vote, do an empty PUT. The 204 status code indicates that the operation was successful.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePut(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody interface{}
@@ -1428,8 +1680,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePu
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/vote"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1493,11 +1745,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdVotePu
 /* IssueTrackerApiService 
  Stop watching this issue.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchDelete(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchDelete(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody interface{}
@@ -1509,8 +1761,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchD
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/watch"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1574,11 +1826,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchD
 /* IssueTrackerApiService 
  Indicated whether or not the authenticated user is watching this issue.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchGet(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchGet(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
@@ -1590,8 +1842,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchG
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/watch"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1655,11 +1907,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchG
 /* IssueTrackerApiService 
  Start watching this issue.  To start watching this issue, do an empty PUT. The 204 status code indicates that the operation was successful.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param issueId The issue&#39;s id
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param issueId The issue id
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
-func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchPut(ctx context.Context, username string, repoSlug string, issueId int32) (ModelError,  *http.Response, error) {
+func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchPut(ctx context.Context, username string, issueId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
 		localVarPostBody interface{}
@@ -1671,8 +1923,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchP
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/issues/{issue_id}/watch"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"issue_id"+"}", fmt.Sprintf("%v", issueId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1734,11 +1986,11 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesIssueIdWatchP
 }
 
 /* IssueTrackerApiService 
- Creates a new issue.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorisation.  The authenticated user is used for the issue&#39;s &#x60;reporter&#x60; field.
+ Creates a new issue.  This call requires authentication. Private repositories or private issue trackers require the caller to authenticate with an account that has appropriate authorization.  The authenticated user is used for the issue&#39;s &#x60;reporter&#x60; field.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param body The new issue. Note that the only required element is &#x60;title&#x60;. All other elements can be omitted from the body.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param body The new issue. The only required element is &#x60;title&#x60;. All other elements can be omitted from the body.
  @return Issue*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx context.Context, username string, repoSlug string, body Issue) (Issue,  *http.Response, error) {
 	var (
@@ -1818,8 +2070,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugIssuesPost(ctx cont
 /* IssueTrackerApiService 
  Returns the milestones that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return PaginatedMilestones*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx context.Context, username string, repoSlug string) (PaginatedMilestones,  *http.Response, error) {
 	var (
@@ -1897,8 +2149,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesGet(ctx c
 /* IssueTrackerApiService 
  Returns the specified issue tracker milestone object.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param milestoneId The milestone&#39;s id
  @return Milestone*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestoneIdGet(ctx context.Context, username string, repoSlug string, milestoneId int32) (Milestone,  *http.Response, error) {
@@ -1978,8 +2230,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugMilestonesMilestone
 /* IssueTrackerApiService 
  Returns the versions that have been defined in the issue tracker.  This resource is only available on repositories that have the issue tracker enabled.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return PaginatedVersions*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx context.Context, username string, repoSlug string) (PaginatedVersions,  *http.Response, error) {
 	var (
@@ -2057,8 +2309,8 @@ func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsGet(ctx con
 /* IssueTrackerApiService 
  Returns the specified issue tracker version object.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param versionId The version&#39;s id
  @return Version*/
 func (a *IssueTrackerApiService) RepositoriesUsernameRepoSlugVersionsVersionIdGet(ctx context.Context, username string, repoSlug string, versionId int32) (Version,  *http.Response, error) {

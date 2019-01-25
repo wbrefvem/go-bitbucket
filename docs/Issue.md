@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **Version** | [***Version**](version.md) |  | [optional] [default to null]
 **Component** | [***Component**](component.md) |  | [optional] [default to null]
 **Votes** | **int32** |  | [optional] [default to null]
-**Content** | [***PullrequestSummary**](pullrequest_summary.md) |  | [optional] [default to null]
+**Content** | [***IssueContent**](issue_content.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

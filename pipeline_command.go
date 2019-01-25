@@ -13,11 +13,11 @@ package bitbucket
 // An executable pipeline command.
 type PipelineCommand struct {
 
-	// The executable command.
-	Command string `json:"command,omitempty"`
-
 	// The name of the command.
 	Name string `json:"name,omitempty"`
+
+	// The executable command.
+	Command string `json:"command,omitempty"`
 
 	// The range in the log that contains the execution output of this command.
 	LogRange *PipelineLogRange `json:"log_range,omitempty"`

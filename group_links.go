@@ -12,7 +12,7 @@ package bitbucket
 
 type GroupLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 }

@@ -12,15 +12,15 @@ package bitbucket
 
 type AccountLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 
-	Avatar *MilestoneLinksSelf `json:"avatar,omitempty"`
+	Avatar *SubjectTypesRepositoryEvents `json:"avatar,omitempty"`
 
-	Followers *MilestoneLinksSelf `json:"followers,omitempty"`
+	Followers *SubjectTypesRepositoryEvents `json:"followers,omitempty"`
 
-	Following *MilestoneLinksSelf `json:"following,omitempty"`
+	Following *SubjectTypesRepositoryEvents `json:"following,omitempty"`
 
-	Repositories *MilestoneLinksSelf `json:"repositories,omitempty"`
+	Repositories *SubjectTypesRepositoryEvents `json:"repositories,omitempty"`
 }

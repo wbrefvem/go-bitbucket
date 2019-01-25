@@ -12,7 +12,7 @@ package bitbucket
 
 type ProjectLinks struct {
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 
-	Avatar *MilestoneLinksSelf `json:"avatar,omitempty"`
+	Avatar *SubjectTypesRepositoryEvents `json:"avatar,omitempty"`
 }

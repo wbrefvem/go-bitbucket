@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **User** | [***User**](user.md) |  | [optional] [default to null]
 **Issue** | [***Issue**](issue.md) |  | [optional] [default to null]
 **Changes** | [***IssueChangeChanges**](issue_change_changes.md) |  | [optional] [default to null]
-**Message** | [***PullrequestSummary**](pullrequest_summary.md) |  | [optional] [default to null]
+**Message** | [***IssueContent**](issue_content.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

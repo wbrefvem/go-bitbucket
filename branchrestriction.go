@@ -14,7 +14,7 @@ type Branchrestriction struct {
 
 	Type_ string `json:"type"`
 
-	Links *MilestoneLinks `json:"links,omitempty"`
+	Links *VersionLinks `json:"links,omitempty"`
 
 	// The branch restriction status' id.
 	Id int32 `json:"id,omitempty"`

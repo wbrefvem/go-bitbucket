@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Id** | **int32** |  | [optional] [default to null]
 **CreatedOn** | [**time.Time**](time.Time.md) |  | [optional] [default to null]
 **UpdatedOn** | [**time.Time**](time.Time.md) |  | [optional] [default to null]
-**Content** | [***PullrequestSummary**](pullrequest_summary.md) |  | [optional] [default to null]
+**Content** | [***IssueContent**](issue_content.md) |  | [optional] [default to null]
 **User** | [***User**](user.md) |  | [optional] [default to null]
 **Deleted** | **bool** |  | [optional] [default to null]
 **Parent** | [***Comment**](comment.md) |  | [optional] [default to null]

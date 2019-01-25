@@ -14,7 +14,7 @@ type IssueAttachment struct {
 
 	Type_ string `json:"type"`
 
-	Links *MilestoneLinks `json:"links,omitempty"`
+	Links *VersionLinks `json:"links,omitempty"`
 
 	Name string `json:"name,omitempty"`
 }

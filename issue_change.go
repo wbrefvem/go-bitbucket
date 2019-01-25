@@ -31,5 +31,5 @@ type IssueChange struct {
 
 	Changes *IssueChangeChanges `json:"changes,omitempty"`
 
-	Message *PullrequestSummary `json:"message,omitempty"`
+	Message *IssueContent `json:"message,omitempty"`
 }

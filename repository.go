@@ -15,6 +15,7 @@ import (
 )
 
 type Repository struct {
+
 	Type_ string `json:"type"`
 
 	Links *RepositoryLinks `json:"links,omitempty"`
@@ -41,7 +42,7 @@ type Repository struct {
 
 	UpdatedOn time.Time `json:"updated_on,omitempty"`
 
-	Size int64 `json:"size,omitempty"`
+	Size int32 `json:"size,omitempty"`
 
 	Language string `json:"language,omitempty"`
 
@@ -49,8 +50,10 @@ type Repository struct {
 
 	HasWiki bool `json:"has_wiki,omitempty"`
 
-	//  Controls the rules for forking this repository.  * **allow_forks**: unrestricted forking * **no_public_forks**: restrict forking to private forks (forks cannot   be made public later) * **no_forks**: deny all forking
+	//  Controls the rules for forking this repository.  * **allow_forks**: unrestricted forking * **no_public_forks**: restrict forking to private forks (forks cannot   be made public later) * **no_forks**: deny all forking 
 	ForkPolicy string `json:"fork_policy,omitempty"`
 
 	Project *Project `json:"project,omitempty"`
+
+	Mainbranch *Branch `json:"mainbranch,omitempty"`
 }

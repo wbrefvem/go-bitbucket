@@ -52,6 +52,8 @@ type APIClient struct {
 	CommitsApi            *CommitsApiService
 	CommitstatusesApi     *CommitstatusesApiService
 	DefaultApi            *DefaultApiService
+	DeployApi             *DeployApiService
+	DeploymentsApi        *DeploymentsApiService
 	DownloadsApi          *DownloadsApiService
 	IssueTrackerApi       *IssueTrackerApiService
 	PagingApi             *PagingApiService
@@ -60,6 +62,8 @@ type APIClient struct {
 	PullrequestsApi       *PullrequestsApiService
 	RefsApi               *RefsApiService
 	RepositoriesApi       *RepositoriesApiService
+	SearchApi             *SearchApiService
+	SnippetApi            *SnippetApiService
 	SnippetsApi           *SnippetsApiService
 	SourceApi             *SourceApiService
 	SshApi                *SshApiService
@@ -89,6 +93,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CommitsApi = (*CommitsApiService)(&c.common)
 	c.CommitstatusesApi = (*CommitstatusesApiService)(&c.common)
 	c.DefaultApi = (*DefaultApiService)(&c.common)
+	c.DeployApi = (*DeployApiService)(&c.common)
+	c.DeploymentsApi = (*DeploymentsApiService)(&c.common)
 	c.DownloadsApi = (*DownloadsApiService)(&c.common)
 	c.IssueTrackerApi = (*IssueTrackerApiService)(&c.common)
 	c.PagingApi = (*PagingApiService)(&c.common)
@@ -97,6 +103,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.PullrequestsApi = (*PullrequestsApiService)(&c.common)
 	c.RefsApi = (*RefsApiService)(&c.common)
 	c.RepositoriesApi = (*RepositoriesApiService)(&c.common)
+	c.SearchApi = (*SearchApiService)(&c.common)
+	c.SnippetApi = (*SnippetApiService)(&c.common)
 	c.SnippetsApi = (*SnippetsApiService)(&c.common)
 	c.SourceApi = (*SourceApiService)(&c.common)
 	c.SshApi = (*SshApiService)(&c.common)

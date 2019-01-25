@@ -12,23 +12,23 @@ package bitbucket
 
 type RepositoryLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 
-	Avatar *MilestoneLinksSelf `json:"avatar,omitempty"`
+	Avatar *SubjectTypesRepositoryEvents `json:"avatar,omitempty"`
 
-	Pullrequests *MilestoneLinksSelf `json:"pullrequests,omitempty"`
+	Pullrequests *SubjectTypesRepositoryEvents `json:"pullrequests,omitempty"`
 
-	Commits *MilestoneLinksSelf `json:"commits,omitempty"`
+	Commits *SubjectTypesRepositoryEvents `json:"commits,omitempty"`
 
-	Forks *MilestoneLinksSelf `json:"forks,omitempty"`
+	Forks *SubjectTypesRepositoryEvents `json:"forks,omitempty"`
 
-	Watchers *MilestoneLinksSelf `json:"watchers,omitempty"`
+	Watchers *SubjectTypesRepositoryEvents `json:"watchers,omitempty"`
 
-	Downloads *MilestoneLinksSelf `json:"downloads,omitempty"`
+	Downloads *SubjectTypesRepositoryEvents `json:"downloads,omitempty"`
 
-	Clone []MilestoneLinksSelf `json:"clone,omitempty"`
+	Clone []SubjectTypesRepositoryEvents `json:"clone,omitempty"`
 
-	Hooks *MilestoneLinksSelf `json:"hooks,omitempty"`
+	Hooks *SubjectTypesRepositoryEvents `json:"hooks,omitempty"`
 }

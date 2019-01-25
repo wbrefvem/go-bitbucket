@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Date** | [**time.Time**](time.Time.md) |  | [optional] [default to null]
 **Author** | [***Author**](author.md) |  | [optional] [default to null]
 **Message** | **string** |  | [optional] [default to null]
-**Summary** | [***PullrequestSummary**](pullrequest_summary.md) |  | [optional] [default to null]
+**Summary** | [***IssueContent**](issue_content.md) |  | [optional] [default to null]
 **Parents** | [**[]BaseCommit**](base_commit.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

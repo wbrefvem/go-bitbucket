@@ -31,8 +31,8 @@ type BranchrestrictionsApiService service
 /* BranchrestrictionsApiService 
  Returns a paginated list of all branch restrictions on the repository.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return PaginatedBranchrestrictions*/
 func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestrictionsGet(ctx context.Context, username string, repoSlug string) (PaginatedBranchrestrictions,  *http.Response, error) {
 	var (
@@ -110,8 +110,8 @@ func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestric
 /* BranchrestrictionsApiService 
  Deletes an existing branch restriction rule.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param id The restriction rule&#39;s id
  @return */
 func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestrictionsIdDelete(ctx context.Context, username string, repoSlug string, id string) ( *http.Response, error) {
@@ -185,8 +185,8 @@ func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestric
 /* BranchrestrictionsApiService 
  Returns a specific branch restriction rule.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param id The restriction rule&#39;s id
  @return Branchrestriction*/
 func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestrictionsIdGet(ctx context.Context, username string, repoSlug string, id string) (Branchrestriction,  *http.Response, error) {
@@ -266,8 +266,8 @@ func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestric
 /* BranchrestrictionsApiService 
  Updates an existing branch restriction rule.  Fields not present in the request body are ignored.  See [&#x60;POST&#x60;](../../branch-restrictions#post) for details.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param id The restriction rule&#39;s id
  @param body The new version of the existing rule
  @return Branchrestriction*/
@@ -350,8 +350,8 @@ func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestric
 /* BranchrestrictionsApiService 
  Creates a new branch restriction rule for a repository.  &#x60;kind&#x60; describes what will be restricted. Allowed values are: &#x60;push&#x60;, &#x60;force&#x60;, &#x60;delete&#x60;, and &#x60;restrict_merges&#x60;.  Different kinds of branch restrictions have different requirements:  * &#x60;push&#x60; and &#x60;restrict_merges&#x60; require &#x60;users&#x60; and &#x60;groups&#x60; to be   specified. Empty lists are allowed, in which case permission is   denied for everybody. * &#x60;force&#x60; can not be specified in a Mercurial repository.  &#x60;pattern&#x60; is used to determine which branches will be restricted.  A &#x60;&#39;*&#39;&#x60; in &#x60;pattern&#x60; will expand to match zero or more characters, and every other character matches itself. For example, &#x60;&#39;foo*&#39;&#x60; will match &#x60;&#39;foo&#39;&#x60; and &#x60;&#39;foobar&#39;&#x60;, but not &#x60;&#39;barfoo&#39;&#x60;. &#x60;&#39;*&#39;&#x60; will match all branches.  &#x60;users&#x60; and &#x60;groups&#x60; are lists of user names and group names.  &#x60;kind&#x60; and &#x60;pattern&#x60; must be unique within a repository; adding new users or groups to an existing restriction should be done via &#x60;PUT&#x60;.  Note that branch restrictions with overlapping patterns are allowed, but the resulting behavior may be surprising.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @param body The new rule
  @return Branchrestriction*/
 func (a *BranchrestrictionsApiService) RepositoriesUsernameRepoSlugBranchRestrictionsPost(ctx context.Context, username string, repoSlug string, body Branchrestriction) (Branchrestriction,  *http.Response, error) {
