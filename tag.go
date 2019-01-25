@@ -14,14 +14,13 @@ import (
 	"time"
 )
 
-// A tag object, representing a tag in a repository.
 type Tag struct {
 
 	Type_ string `json:"type"`
 
-	Links *TagLinks `json:"links,omitempty"`
+	Links *RefLinks `json:"links,omitempty"`
 
-	// The name of the tag.
+	// The name of the ref.
 	Name string `json:"name,omitempty"`
 
 	Target *Commit `json:"target,omitempty"`

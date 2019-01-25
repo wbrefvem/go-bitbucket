@@ -22,8 +22,8 @@ Returns a paginated list of all branch restrictions on the repository.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -51,8 +51,8 @@ Deletes an existing branch restriction rule.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
   **id** | **string**| The restriction rule&#39;s id | 
 
 ### Return type
@@ -81,8 +81,8 @@ Returns a specific branch restriction rule.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
   **id** | **string**| The restriction rule&#39;s id | 
 
 ### Return type
@@ -111,8 +111,8 @@ Updates an existing branch restriction rule.  Fields not present in the request 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
   **id** | **string**| The restriction rule&#39;s id | 
   **body** | [**Branchrestriction**](Branchrestriction.md)| The new version of the existing rule | 
 
@@ -142,8 +142,8 @@ Creates a new branch restriction rule for a repository.  `kind` describes what w
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
   **body** | [**Branchrestriction**](Branchrestriction.md)| The new rule | 
 
 ### Return type

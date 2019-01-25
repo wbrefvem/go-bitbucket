@@ -31,7 +31,7 @@ type ProjectsApiService service
 /* ProjectsApiService 
  
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The team which owns the project. This can either be the &#x60;username&#x60; of the team or the &#x60;UUID&#x60; of the team (surrounded by curly-braces (&#x60;{}&#x60;)). 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @return PaginatedProjects*/
 func (a *ProjectsApiService) TeamsUsernameProjectsGet(ctx context.Context, username string) (PaginatedProjects,  *http.Response, error) {
 	var (
@@ -108,7 +108,7 @@ func (a *ProjectsApiService) TeamsUsernameProjectsGet(ctx context.Context, usern
 /* ProjectsApiService 
  Creates a new project.  Note that the avatar has to be embedded as either a data-url or a URL to an external image as shown in the examples below:  &#x60;&#x60;&#x60; $ body&#x3D;$(cat &lt;&lt; EOF {     \&quot;name\&quot;: \&quot;Mars Project\&quot;,     \&quot;key\&quot;: \&quot;MARS\&quot;,     \&quot;description\&quot;: \&quot;Software for colonizing mars.\&quot;,     \&quot;links\&quot;: {         \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/...\&quot;         }     },     \&quot;is_private\&quot;: false } EOF ) $ curl -H \&quot;Content-Type: application/json\&quot; \\        -X POST \\        -d \&quot;$body\&quot; \\        https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq . {   // Serialized project document } &#x60;&#x60;&#x60;  or even:  &#x60;&#x60;&#x60; $ body&#x3D;$(cat &lt;&lt; EOF {     \&quot;name\&quot;: \&quot;Mars Project\&quot;,     \&quot;key\&quot;: \&quot;MARS\&quot;,     \&quot;description\&quot;: \&quot;Software for colonizing mars.\&quot;,     \&quot;links\&quot;: {         \&quot;avatar\&quot;: {             \&quot;href\&quot;: \&quot;http://i.imgur.com/72tRx4w.gif\&quot;         }     },     \&quot;is_private\&quot;: false } EOF ) $ curl -H \&quot;Content-Type: application/json\&quot; \\        -X POST \\        -d \&quot;$body\&quot; \\        https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq . {   // Serialized project document } &#x60;&#x60;&#x60;
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The team which owns the project. This can either be the &#x60;username&#x60; of the team or the &#x60;UUID&#x60; of the team (surrounded by curly-braces (&#x60;{}&#x60;)). 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param body 
  @return Project*/
 func (a *ProjectsApiService) TeamsUsernameProjectsPost(ctx context.Context, username string, body Project) (Project,  *http.Response, error) {
@@ -188,7 +188,7 @@ func (a *ProjectsApiService) TeamsUsernameProjectsPost(ctx context.Context, user
 /* ProjectsApiService 
  
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The team which owns the project. This can either be the &#x60;username&#x60; of the team or the &#x60;UUID&#x60; of the team (surrounded by curly-braces (&#x60;{}&#x60;)). 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param projectKey The project in question. This can either be the actual &#x60;key&#x60; assigned to the project or the &#x60;UUID&#x60; (surrounded by curly-braces (&#x60;{}&#x60;)). 
  @return */
 func (a *ProjectsApiService) TeamsUsernameProjectsProjectKeyDelete(ctx context.Context, username string, projectKey string) ( *http.Response, error) {
@@ -261,7 +261,7 @@ func (a *ProjectsApiService) TeamsUsernameProjectsProjectKeyDelete(ctx context.C
 /* ProjectsApiService 
  
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The team which owns the project. This can either be the &#x60;username&#x60; of the team or the &#x60;UUID&#x60; of the team (surrounded by curly-braces (&#x60;{}&#x60;)). 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param projectKey The project in question. This can either be the actual &#x60;key&#x60; assigned to the project or the &#x60;UUID&#x60; (surrounded by curly-braces (&#x60;{}&#x60;)). 
  @return Project*/
 func (a *ProjectsApiService) TeamsUsernameProjectsProjectKeyGet(ctx context.Context, username string, projectKey string) (Project,  *http.Response, error) {
@@ -340,7 +340,7 @@ func (a *ProjectsApiService) TeamsUsernameProjectsProjectKeyGet(ctx context.Cont
 /* ProjectsApiService 
  Since this endpoint can be used to both update and to create a project, the request body depends on the intent.  ### Creation  See the POST documentation for the project collection for an example of the request body.  Note: The &#x60;key&#x60; should not be specified in the body of request (since it is already present in the URL). The &#x60;name&#x60; is required, everything else is optional.  ### Update  See the POST documentation for the project collection for an example of the request body.  Note: The key is not required in the body (since it is already in the URL). The key may be specified in the body, if the intent is to change the key itself. In such a scenario, the location of the project is changed and is returned in the &#x60;Location&#x60; header of the response.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username The team which owns the project. This can either be the &#x60;username&#x60; of the team or the &#x60;UUID&#x60; of the team (surrounded by curly-braces (&#x60;{}&#x60;)). 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param projectKey The project in question. This can either be the actual &#x60;key&#x60; assigned to the project or the &#x60;UUID&#x60; (surrounded by curly-braces (&#x60;{}&#x60;)). 
  @param body 
  @return Project*/

@@ -728,7 +728,7 @@ func (a *TeamsApiService) TeamsUsernameHooksUidPut(ctx context.Context, username
 }
 
 /* TeamsApiService 
- All members of a team.  Returns all members of the specified team. Any member of any of the team&#39;s groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team&#39;s repositories.  Note that members using the \&quot;private profile\&quot; feature are not included.
+ Returns all members of the specified team. Any member of any of the team&#39;s groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team&#39;s repositories.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @return User*/
@@ -820,6 +820,83 @@ func (a *TeamsApiService) TeamsUsernameRepositoriesGet(ctx context.Context, user
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/teams/{username}/repositories"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* TeamsApiService 
+ Returns all members of the specified team. Any member of any of the team&#39;s groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team&#39;s repositories.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @return User*/
+func (a *TeamsApiService) UsersUsernameMembersGet(ctx context.Context, username string) (User,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  User
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/users/{username}/members"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
 
 	localVarHeaderParams := make(map[string]string)

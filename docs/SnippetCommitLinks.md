@@ -3,9 +3,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Self** | [***MilestoneLinksSelf**](milestone_links_self.md) |  | [optional] [default to null]
-**Html** | [***MilestoneLinksSelf**](milestone_links_self.md) |  | [optional] [default to null]
-**Diff** | [***MilestoneLinksSelf**](milestone_links_self.md) |  | [optional] [default to null]
+**Self** | [***SubjectTypesRepositoryEvents**](subject_types_repository_events.md) |  | [optional] [default to null]
+**Html** | [***SubjectTypesRepositoryEvents**](subject_types_repository_events.md) |  | [optional] [default to null]
+**Diff** | [***SubjectTypesRepositoryEvents**](subject_types_repository_events.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -12,7 +12,7 @@ package bitbucket
 
 type IssueChangeLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Issue *MilestoneLinksSelf `json:"issue,omitempty"`
+	Issue *SubjectTypesRepositoryEvents `json:"issue,omitempty"`
 }

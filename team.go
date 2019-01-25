@@ -22,6 +22,12 @@ type Team struct {
 
 	Username string `json:"username,omitempty"`
 
+	// Account name defined by the owner. Should be used instead of the \"username\" field. Note that \"nickname\" cannot be used in place of \"username\" in URLs and queries, as \"nickname\" is not guaranteed to be unique.
+	Nickname string `json:"nickname,omitempty"`
+
+	// The status of the account. Currently the only possible value is \"active\", but more values may be added in the future.
+	AccountStatus string `json:"account_status,omitempty"`
+
 	DisplayName string `json:"display_name,omitempty"`
 
 	Website string `json:"website,omitempty"`

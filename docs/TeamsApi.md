@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**TeamsUsernameHooksUidPut**](TeamsApi.md#TeamsUsernameHooksUidPut) | **Put** /teams/{username}/hooks/{uid} | 
 [**TeamsUsernameMembersGet**](TeamsApi.md#TeamsUsernameMembersGet) | **Get** /teams/{username}/members | 
 [**TeamsUsernameRepositoriesGet**](TeamsApi.md#TeamsUsernameRepositoriesGet) | **Get** /teams/{username}/repositories | 
+[**UsersUsernameMembersGet**](TeamsApi.md#UsersUsernameMembersGet) | **Get** /users/{username}/members | 
 [**UsersUsernameRepositoriesGet**](TeamsApi.md#UsersUsernameRepositoriesGet) | **Get** /users/{username}/repositories | 
 
 
@@ -284,7 +285,7 @@ Name | Type | Description  | Notes
 > User TeamsUsernameMembersGet(ctx, username)
 
 
-All members of a team.  Returns all members of the specified team. Any member of any of the team's groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team's repositories.  Note that members using the \"private profile\" feature are not included.
+Returns all members of the specified team. Any member of any of the team's groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team's repositories.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
 
 ### Required Parameters
 
@@ -324,6 +325,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ModelError**](error.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [basic](../README.md#basic), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **UsersUsernameMembersGet**
+> User UsersUsernameMembersGet(ctx, username)
+
+
+Returns all members of the specified team. Any member of any of the team's groups is considered a member of the team. This includes users in groups that may not actually have access to any of the team's repositories.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **username** | **string**|  | 
+
+### Return type
+
+[**User**](user.md)
 
 ### Authorization
 

@@ -31,11 +31,11 @@ type CommitsApiService service
 /* CommitsApiService 
  Redact the authenticated user&#39;s approval of the specified commit.  This operation is only available to users that have explicit access to the repository. In contrast, just the fact that a repository is publicly accessible to users does not give them the ability to approve commits.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param node The commit&#39;s SHA1.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return */
-func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApproveDelete(ctx context.Context, username string, repoSlug string, node string) ( *http.Response, error) {
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApproveDelete(ctx context.Context, username string, node string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody interface{}
@@ -46,8 +46,8 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApproveDelete(
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}/approve"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -106,11 +106,11 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApproveDelete(
 /* CommitsApiService 
  Approve the specified commit as the authenticated user.  This operation is only available to users that have explicit access to the repository. In contrast, just the fact that a repository is publicly accessible to users does not give them the ability to approve commits.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param node The commit&#39;s SHA1.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return Participant*/
-func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApprovePost(ctx context.Context, username string, repoSlug string, node string) (Participant,  *http.Response, error) {
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApprovePost(ctx context.Context, username string, node string, repoSlug string) (Participant,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody interface{}
@@ -122,89 +122,8 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeApprovePost(ct
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}/approve"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json",  }
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-		}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["Authorization"] = key
-		}
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return successPayload, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return successPayload, localVarHttpResponse, err
-	}
-	defer localVarHttpResponse.Body.Close()
-	if localVarHttpResponse.StatusCode >= 300 {
-		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
-	}
-
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return successPayload, localVarHttpResponse, err
-	}
-
-
-	return successPayload, localVarHttpResponse, err
-}
-
-/* CommitsApiService 
- Returns the specified commit.
- * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
- @param revision The commit&#39;s SHA1.
- @return Commit*/
-func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitRevisionGet(ctx context.Context, username string, repoSlug string, revision string) (Commit,  *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  Commit
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{revision}"
-	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"revision"+"}", fmt.Sprintf("%v", revision), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -268,24 +187,24 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitRevisionGet(ctx co
 /* CommitsApiService 
  Returns the specified commit comment.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param sha 
- @param commentId 
- @param repoSlug 
- @return ModelError*/
-func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet(ctx context.Context, username string, sha string, commentId string, repoSlug string) (ModelError,  *http.Response, error) {
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param node The commit&#39;s SHA1.
+ @param commentId The id of the comment.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @return CommitComment*/
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet(ctx context.Context, username string, node string, commentId int32, repoSlug string) (CommitComment,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  ModelError
+	 	successPayload  CommitComment
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{sha}/comments/{comment_id}"
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}/comments/{comment_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"sha"+"}", fmt.Sprintf("%v", sha), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
@@ -351,23 +270,182 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitShaCommentsComment
 /* CommitsApiService 
  Returns the commit&#39;s comments.  This includes both global and inline comments.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param sha 
- @param repoSlug 
- @return ModelError*/
-func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitShaCommentsGet(ctx context.Context, username string, sha string, repoSlug string) (ModelError,  *http.Response, error) {
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param node The commit&#39;s SHA1.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @return PaginatedCommitComments*/
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeCommentsGet(ctx context.Context, username string, node string, repoSlug string) (PaginatedCommitComments,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  ModelError
+	 	successPayload  PaginatedCommitComments
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{sha}/comments"
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}/comments"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"sha"+"}", fmt.Sprintf("%v", sha), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* CommitsApiService 
+ Creates new comment on the specified commit.  To post a reply to an existing comment, include the &#x60;parent.id&#x60; field:  &#x60;&#x60;&#x60; $ curl https://api.bitbucket.org/2.0/repositories/atlassian/prlinks/commit/db9ba1e031d07a02603eae0e559a7adc010257fc/comments/ \\   -X POST -u evzijst \\   -H &#39;Content-Type: application/json&#39; \\   -d &#39;{\&quot;content\&quot;: {\&quot;raw\&quot;: \&quot;One more thing!\&quot;},        \&quot;parent\&quot;: {\&quot;id\&quot;: 5728901}}&#39; &#x60;&#x60;&#x60;
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param node The commit&#39;s SHA1.
+ @param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param body The specified comment.
+ @return */
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeCommentsPost(ctx context.Context, node string, username string, repoSlug string, body CommitComment) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}/comments"
+	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
+/* CommitsApiService 
+ Returns the specified commit.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param node The commit&#39;s SHA1.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @return Commit*/
+func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitNodeGet(ctx context.Context, username string, node string, repoSlug string) (Commit,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Commit
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{node}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"node"+"}", fmt.Sprintf("%v", node), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -432,8 +510,8 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitShaCommentsGet(ctx
 /* CommitsApiService 
  These are the repository&#39;s commits. They are paginated and returned in reverse chronological order, similar to the output of &#x60;git log&#x60; and &#x60;hg log&#x60;. Like these tools, the DAG can be filtered.  ## GET /repositories/{username}/{repo_slug}/commits/  Returns all commits in the repo in topological order (newest commit first). All branches and tags are included (similar to &#x60;git log --all&#x60; and &#x60;hg log&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/master  Returns all commits on rev &#x60;master&#x60; (similar to &#x60;git log master&#x60;, &#x60;hg log master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/dev?exclude&#x3D;master  Returns all commits on ref &#x60;dev&#x60;, except those that are reachable on &#x60;master&#x60; (similar to &#x60;git log dev ^master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/?exclude&#x3D;master  Returns all commits in the repo that are not on master (similar to &#x60;git log --all ^master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/?include&#x3D;foo&amp;include&#x3D;bar&amp;exclude&#x3D;fu&amp;exclude&#x3D;fubar  Returns all commits that are on refs &#x60;foo&#x60; or &#x60;bar&#x60;, but not on &#x60;fu&#x60; or &#x60;fubar&#x60; (similar to &#x60;git log foo bar ^fu ^fubar&#x60;).  Because the response could include a very large number of commits, it is paginated. Follow the &#39;next&#39; link in the response to navigate to the next page of commits. As with other paginated resources, do not construct your own links.  When the include and exclude parameters are more than can fit in a query string, clients can use a &#x60;x-www-form-urlencoded&#x60; POST instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
 func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsGet(ctx context.Context, username string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
@@ -511,8 +589,8 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsGet(ctx context.C
 /* CommitsApiService 
  Identical to &#x60;GET /repositories/{username}/{repo_slug}/commits&#x60;, except that POST allows clients to place the include and exclude parameters in the request body to avoid URL length issues.  **Note that this resource does NOT support new commit creation.**
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
- @param repoSlug 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
 func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsPost(ctx context.Context, username string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
@@ -590,9 +668,9 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsPost(ctx context.
 /* CommitsApiService 
  These are the repository&#39;s commits. They are paginated and returned in reverse chronological order, similar to the output of &#x60;git log&#x60; and &#x60;hg log&#x60;. Like these tools, the DAG can be filtered.  ## GET /repositories/{username}/{repo_slug}/commits/  Returns all commits in the repo in topological order (newest commit first). All branches and tags are included (similar to &#x60;git log --all&#x60; and &#x60;hg log&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/master  Returns all commits on rev &#x60;master&#x60; (similar to &#x60;git log master&#x60;, &#x60;hg log master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/dev?exclude&#x3D;master  Returns all commits on ref &#x60;dev&#x60;, except those that are reachable on &#x60;master&#x60; (similar to &#x60;git log dev ^master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/?exclude&#x3D;master  Returns all commits in the repo that are not on master (similar to &#x60;git log --all ^master&#x60;).  ## GET /repositories/{username}/{repo_slug}/commits/?include&#x3D;foo&amp;include&#x3D;bar&amp;exclude&#x3D;fu&amp;exclude&#x3D;fubar  Returns all commits that are on refs &#x60;foo&#x60; or &#x60;bar&#x60;, but not on &#x60;fu&#x60; or &#x60;fubar&#x60; (similar to &#x60;git log foo bar ^fu ^fubar&#x60;).  Because the response could include a very large number of commits, it is paginated. Follow the &#39;next&#39; link in the response to navigate to the next page of commits. As with other paginated resources, do not construct your own links.  When the include and exclude parameters are more than can fit in a query string, clients can use a &#x60;x-www-form-urlencoded&#x60; POST instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param revision 
- @param repoSlug 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
 func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsRevisionGet(ctx context.Context, username string, revision string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
@@ -671,9 +749,9 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsRevisionGet(ctx c
 /* CommitsApiService 
  Identical to &#x60;GET /repositories/{username}/{repo_slug}/commits&#x60;, except that POST allows clients to place the include and exclude parameters in the request body to avoid URL length issues.  **Note that this resource does NOT support new commit creation.**
  * @param ctx context.Context for authentication, logging, tracing, etc.
- @param username 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
  @param revision 
- @param repoSlug 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
  @return ModelError*/
 func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsRevisionPost(ctx context.Context, username string, revision string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
@@ -759,6 +837,7 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugCommitsRevisionPost(ctx 
      @param "context" (int32) Generate diffs with &lt;n&gt; lines of context instead of the usual three
      @param "path" (string) Limit the diff to a particular file (this parameter can be repeated for multiple paths)
      @param "ignoreWhitespace" (bool) Generate diffs that ignore whitespace
+     @param "binary" (bool) Generate diffs that include binary files,true if omitted.
  @return */
 func (a *CommitsApiService) RepositoriesUsernameRepoSlugDiffSpecGet(ctx context.Context, username string, spec string, repoSlug string, localVarOptionals map[string]interface{}) ( *http.Response, error) {
 	var (
@@ -787,6 +866,9 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugDiffSpecGet(ctx context.
 	if err := typeCheckParameter(localVarOptionals["ignoreWhitespace"], "bool", "ignoreWhitespace"); err != nil {
 		return nil, err
 	}
+	if err := typeCheckParameter(localVarOptionals["binary"], "bool", "binary"); err != nil {
+		return nil, err
+	}
 
 	if localVarTempParam, localVarOk := localVarOptionals["context"].(int32); localVarOk {
 		localVarQueryParams.Add("context", parameterToString(localVarTempParam, ""))
@@ -796,6 +878,9 @@ func (a *CommitsApiService) RepositoriesUsernameRepoSlugDiffSpecGet(ctx context.
 	}
 	if localVarTempParam, localVarOk := localVarOptionals["ignoreWhitespace"].(bool); localVarOk {
 		localVarQueryParams.Add("ignore_whitespace", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["binary"].(bool); localVarOk {
+		localVarQueryParams.Add("binary", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json",  }

@@ -12,5 +12,5 @@ package bitbucket
 
 type SubjectTypesRepository struct {
 
-	Events *MilestoneLinksSelf `json:"events,omitempty"`
+	Events *SubjectTypesRepositoryEvents `json:"events,omitempty"`
 }

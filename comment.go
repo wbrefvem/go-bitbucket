@@ -24,7 +24,7 @@ type Comment struct {
 
 	UpdatedOn time.Time `json:"updated_on,omitempty"`
 
-	Content *PullrequestSummary `json:"content,omitempty"`
+	Content *IssueContent `json:"content,omitempty"`
 
 	User *User `json:"user,omitempty"`
 

@@ -127,7 +127,7 @@ This endpoint does not need any parameter.
 > PaginatedUsers UsersUsernameFollowersGet(ctx, username)
 
 
-Returns the list of accounts that are following this team.
+Returns the list of accounts that are following this user.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
 
 ### Required Parameters
 
@@ -155,7 +155,7 @@ Name | Type | Description  | Notes
 > PaginatedUsers UsersUsernameFollowingGet(ctx, username)
 
 
-Returns the list of accounts this user is following.
+Returns the list of accounts this user is following.  This operation has been deprecated due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/) for details.
 
 ### Required Parameters
 
@@ -183,14 +183,14 @@ Name | Type | Description  | Notes
 > User UsersUsernameGet(ctx, username)
 
 
-Gets the public information associated with a user account.  If the user's profile is private, `location`, `website` and `created_on` elements are omitted.
+Gets the public information associated with a user account.  If the user's profile is private, `location`, `website` and `created_on` elements are omitted.  Note that the user object returned by this operation is changing significantly, due to privacy changes. See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#changes-to-bitbucket-user-objects) for details.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**| The account&#39;s username or UUID. | 
+  **username** | **string**| The account&#39;s UUID, account_id, or username. Note that username has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). | 
 
 ### Return type
 
@@ -211,7 +211,7 @@ Name | Type | Description  | Notes
 > PaginatedWebhookSubscriptions UsersUsernameHooksGet(ctx, username)
 
 
-Returns a paginated list of webhooks installed on this user account.
+Returns a paginated list of webhooks installed on this user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account's UUID or account_id instead.
 
 ### Required Parameters
 
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 > WebhookSubscription UsersUsernameHooksPost(ctx, username)
 
 
-Creates a new webhook on the specified user account.  Account-level webhooks are fired for events from all repositories belonging to that account.  Note that one can only register webhooks on one's own account, not that of others.
+Creates a new webhook on the specified user account.  Account-level webhooks are fired for events from all repositories belonging to that account.  Note that one can only register webhooks on one's own account, not that of others.  Also, note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account's UUID or account_id instead.
 
 ### Required Parameters
 
@@ -267,7 +267,7 @@ Name | Type | Description  | Notes
 > UsersUsernameHooksUidDelete(ctx, username, uid)
 
 
-Deletes the specified webhook subscription from the given user account.
+Deletes the specified webhook subscription from the given user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account's UUID or account_id instead.
 
 ### Required Parameters
 
@@ -296,7 +296,7 @@ Name | Type | Description  | Notes
 > WebhookSubscription UsersUsernameHooksUidGet(ctx, username, uid)
 
 
-Returns the webhook with the specified id installed on the given user account.
+Returns the webhook with the specified id installed on the given user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account's UUID or account_id instead.
 
 ### Required Parameters
 
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 > WebhookSubscription UsersUsernameHooksUidPut(ctx, username, uid)
 
 
-Updates the specified webhook subscription.  The following properties can be mutated:  * `description` * `url` * `active` * `events`
+Updates the specified webhook subscription.  The following properties can be mutated:  * `description` * `url` * `active` * `events`  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account's UUID or account_id instead.
 
 ### Required Parameters
 

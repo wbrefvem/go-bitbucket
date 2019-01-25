@@ -12,21 +12,21 @@ package bitbucket
 
 type PullrequestLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 
-	Commits *MilestoneLinksSelf `json:"commits,omitempty"`
+	Commits *SubjectTypesRepositoryEvents `json:"commits,omitempty"`
 
-	Approve *MilestoneLinksSelf `json:"approve,omitempty"`
+	Approve *SubjectTypesRepositoryEvents `json:"approve,omitempty"`
 
-	Diff *MilestoneLinksSelf `json:"diff,omitempty"`
+	Diff *SubjectTypesRepositoryEvents `json:"diff,omitempty"`
 
-	Comments *MilestoneLinksSelf `json:"comments,omitempty"`
+	Comments *SubjectTypesRepositoryEvents `json:"comments,omitempty"`
 
-	Activity *MilestoneLinksSelf `json:"activity,omitempty"`
+	Activity *SubjectTypesRepositoryEvents `json:"activity,omitempty"`
 
-	Merge *MilestoneLinksSelf `json:"merge,omitempty"`
+	Merge *SubjectTypesRepositoryEvents `json:"merge,omitempty"`
 
-	Decline *MilestoneLinksSelf `json:"decline,omitempty"`
+	Decline *SubjectTypesRepositoryEvents `json:"decline,omitempty"`
 }

@@ -14,15 +14,15 @@ type PipelineVariable struct {
 
 	Type_ string `json:"type"`
 
-	// The value of the variable. If the variable is secured, this will be empty.
-	Value string `json:"value,omitempty"`
-
-	// If true, this variable will be treated as secured. The value will never be exposed in the logs or the REST API.
-	Secured bool `json:"secured,omitempty"`
-
 	// The UUID identifying the variable.
 	Uuid string `json:"uuid,omitempty"`
 
 	// The unique name of the variable.
 	Key string `json:"key,omitempty"`
+
+	// The value of the variable. If the variable is secured, this will be empty.
+	Value string `json:"value,omitempty"`
+
+	// If true, this variable will be treated as secured. The value will never be exposed in the logs or the REST API.
+	Secured bool `json:"secured,omitempty"`
 }

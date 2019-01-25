@@ -12,15 +12,15 @@ package bitbucket
 
 type IssueLinks struct {
 
-	Self *MilestoneLinksSelf `json:"self,omitempty"`
+	Self *SubjectTypesRepositoryEvents `json:"self,omitempty"`
 
-	Html *MilestoneLinksSelf `json:"html,omitempty"`
+	Html *SubjectTypesRepositoryEvents `json:"html,omitempty"`
 
-	Comments *MilestoneLinksSelf `json:"comments,omitempty"`
+	Comments *SubjectTypesRepositoryEvents `json:"comments,omitempty"`
 
-	Attachments *MilestoneLinksSelf `json:"attachments,omitempty"`
+	Attachments *SubjectTypesRepositoryEvents `json:"attachments,omitempty"`
 
-	Watch *MilestoneLinksSelf `json:"watch,omitempty"`
+	Watch *SubjectTypesRepositoryEvents `json:"watch,omitempty"`
 
-	Vote *MilestoneLinksSelf `json:"vote,omitempty"`
+	Vote *SubjectTypesRepositoryEvents `json:"vote,omitempty"`
 }

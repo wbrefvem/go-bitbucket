@@ -26,11 +26,9 @@ type Commit struct {
 
 	Message string `json:"message,omitempty"`
 
-	Summary *PullrequestSummary `json:"summary,omitempty"`
+	Summary *IssueContent `json:"summary,omitempty"`
 
 	Parents []BaseCommit `json:"parents,omitempty"`
-
-	Links *CommitLinks `json:"links,omitempty"`
 
 	Repository *Repository `json:"repository,omitempty"`
 

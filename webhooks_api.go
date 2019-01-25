@@ -961,7 +961,7 @@ func (a *WebhooksApiService) TeamsUsernameHooksUidPut(ctx context.Context, usern
 }
 
 /* WebhooksApiService 
- Returns a paginated list of webhooks installed on this user account.
+ Returns a paginated list of webhooks installed on this user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account&#39;s UUID or account_id instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @return PaginatedWebhookSubscriptions*/
@@ -1038,7 +1038,7 @@ func (a *WebhooksApiService) UsersUsernameHooksGet(ctx context.Context, username
 }
 
 /* WebhooksApiService 
- Creates a new webhook on the specified user account.  Account-level webhooks are fired for events from all repositories belonging to that account.  Note that one can only register webhooks on one&#39;s own account, not that of others.
+ Creates a new webhook on the specified user account.  Account-level webhooks are fired for events from all repositories belonging to that account.  Note that one can only register webhooks on one&#39;s own account, not that of others.  Also, note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account&#39;s UUID or account_id instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @return WebhookSubscription*/
@@ -1115,7 +1115,7 @@ func (a *WebhooksApiService) UsersUsernameHooksPost(ctx context.Context, usernam
 }
 
 /* WebhooksApiService 
- Deletes the specified webhook subscription from the given user account.
+ Deletes the specified webhook subscription from the given user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account&#39;s UUID or account_id instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @param uid The installed webhook&#39;s id
@@ -1188,7 +1188,7 @@ func (a *WebhooksApiService) UsersUsernameHooksUidDelete(ctx context.Context, us
 }
 
 /* WebhooksApiService 
- Returns the webhook with the specified id installed on the given user account.
+ Returns the webhook with the specified id installed on the given user account.  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account&#39;s UUID or account_id instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @param uid The installed webhook&#39;s id.
@@ -1267,7 +1267,7 @@ func (a *WebhooksApiService) UsersUsernameHooksUidGet(ctx context.Context, usern
 }
 
 /* WebhooksApiService 
- Updates the specified webhook subscription.  The following properties can be mutated:  * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;active&#x60; * &#x60;events&#x60;
+ Updates the specified webhook subscription.  The following properties can be mutated:  * &#x60;description&#x60; * &#x60;url&#x60; * &#x60;active&#x60; * &#x60;events&#x60;  Note that the username path parameter has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis). Use the account&#39;s UUID or account_id instead.
  * @param ctx context.Context for authentication, logging, tracing, etc.
  @param username 
  @param uid The installed webhook&#39;s id

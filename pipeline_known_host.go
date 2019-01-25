@@ -14,12 +14,12 @@ type PipelineKnownHost struct {
 
 	Type_ string `json:"type"`
 
-	// The public key of the known host.
-	PublicKey *PipelineSshPublicKey `json:"public_key,omitempty"`
+	// The UUID identifying the known host.
+	Uuid string `json:"uuid,omitempty"`
 
 	// The hostname of the known host.
 	Hostname string `json:"hostname,omitempty"`
 
-	// The UUID identifying the known host.
-	Uuid string `json:"uuid,omitempty"`
+	// The public key of the known host.
+	PublicKey *PipelineSshPublicKey `json:"public_key,omitempty"`
 }

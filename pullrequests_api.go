@@ -11,14 +11,13 @@
 package bitbucket
 
 import (
+	"io/ioutil"
+	"net/url"
+	"net/http"
+	"strings"
+	"golang.org/x/net/context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/url"
-	"strings"
-
-	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -28,18 +27,189 @@ var (
 
 type PullrequestsApiService service
 
-/* PullrequestsApiService
-Returns the repository&#39;s default reviewers.  These are the users that are automatically added as reviewers on every new pull request that is created.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@return */
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersGet(ctx context.Context, username string, repoSlug string) (*http.Response, error) {
+
+/* PullrequestsApiService Returns a paginated list of all pull requests as part of which this commit was reviewed.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username The account; either the UUID in curly braces, or the account_id
+ @param repoSlug The repository; either the UUID in curly braces, or the slug
+ @param commit The SHA1 of the commit
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "page" (int32) Which page to retrieve
+     @param "pagelen" (int32) How many pull requests to retrieve per page
+ @return PaginatedPullrequests*/
+func (a *PullrequestsApiService) GetPullrequestsForCommit(ctx context.Context, username string, repoSlug string, commit string, localVarOptionals map[string]interface{}) (PaginatedPullrequests,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedPullrequests
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/commit/{commit}/pullrequests"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commit"+"}", fmt.Sprintf("%v", commit), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if err := typeCheckParameter(localVarOptionals["page"], "int32", "page"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["pagelen"], "int32", "pagelen"); err != nil {
+		return successPayload, nil, err
+	}
+
+	if localVarTempParam, localVarOk := localVarOptionals["page"].(int32); localVarOk {
+		localVarQueryParams.Add("page", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["pagelen"].(int32); localVarOk {
+		localVarQueryParams.Add("pagelen", parameterToString(localVarTempParam, ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns all pull requests authored by the specified user.  By default only open pull requests are returned. This can be controlled using the &#x60;state&#x60; query parameter. To retrieve pull requests that are in one of multiple states, repeat the &#x60;state&#x60; parameter for each individual state.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../meta/filtering) for more details.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param targetUser 
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "state" (string) Only return pull requests that are in this state. This parameter can be repeated.
+ @return PaginatedPullrequests*/
+func (a *PullrequestsApiService) PullrequestsTargetUserGet(ctx context.Context, targetUser string, username string, localVarOptionals map[string]interface{}) (PaginatedPullrequests,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedPullrequests
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/pullrequests/{target_user}"
+	localVarPath = strings.Replace(localVarPath, "{"+"target_user"+"}", fmt.Sprintf("%v", targetUser), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if err := typeCheckParameter(localVarOptionals["state"], "string", "state"); err != nil {
+		return successPayload, nil, err
+	}
+
+	if localVarTempParam, localVarOk := localVarOptionals["state"].(string); localVarOk {
+		localVarQueryParams.Add("state", parameterToString(localVarTempParam, ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns the repository&#39;s default reviewers.  These are the users that are automatically added as reviewers on every new pull request that is created.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersGet(ctx context.Context, username string, repoSlug string) ( *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -51,8 +221,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersGet
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -63,7 +234,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersGet
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -100,34 +271,35 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersGet
 	return localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Removes a default reviewer from the repository.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param targetUsername
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameDelete(ctx context.Context, username string, targetUsername string, repoSlug string) (ModelError, *http.Response, error) {
+/* PullrequestsApiService 
+ Removes a default reviewer from the repository.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param targetUsername This can either be the username or the UUID of the default reviewer, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. 
+ @return ModelError*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameDelete(ctx context.Context, username string, repoSlug string, targetUsername string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/default-reviewers/{target_username}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -138,7 +310,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -176,37 +348,39 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns the specified reviewer.  This can be used to test whether a user is among the repository&#39;s default reviewers list. A 404 indicates that that specified user is not a default reviewer.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param targetUsername
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameGet(ctx context.Context, username string, targetUsername string, repoSlug string) (ModelError, *http.Response, error) {
+/* PullrequestsApiService 
+ Returns the specified reviewer.  This can be used to test whether a user is among the repository&#39;s default reviewers list. A 404 indicates that that specified user is not a default reviewer.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param targetUsername This can either be the username or the UUID of the default reviewer, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. 
+ @return ModelError*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameGet(ctx context.Context, username string, repoSlug string, targetUsername string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/default-reviewers/{target_username}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -217,7 +391,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -255,37 +429,39 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Adds the specified user to the repository&#39;s list of default reviewers.  This method is idempotent. Adding a user a second time has no effect.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param targetUsername
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernamePut(ctx context.Context, username string, targetUsername string, repoSlug string) (ModelError, *http.Response, error) {
+/* PullrequestsApiService 
+ Adds the specified user to the repository&#39;s list of default reviewers.  This method is idempotent. Adding a user a second time has no effect.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param targetUsername This can either be the username or the UUID of the default reviewer, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. 
+ @return ModelError*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernamePut(ctx context.Context, username string, repoSlug string, targetUsername string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/default-reviewers/{target_username}"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"target_username"+"}", fmt.Sprintf("%v", targetUsername), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -296,7 +472,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -334,22 +510,23 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugDefaultReviewersTar
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a paginated list of the pull request&#39;s activity log.  This includes comments that were made by the reviewers, updates and approvals.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param pullRequestId The id of the pull request.
-@return */
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsActivityGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (*http.Response, error) {
+/* PullrequestsApiService 
+ Returns a paginated list of the pull request&#39;s activity log.  This includes comments that were made by the reviewers, updates and approvals.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsActivityGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -362,8 +539,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsActivit
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -374,7 +552,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsActivit
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -411,21 +589,21 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsActivit
 	return localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a paginated list of all pull requests on the specified repository. By default only open pull requests are returned. This can be controlled using the &#x60;state&#x60; query parameter. To retrieve pull requests that are in one of multiple states, repeat the &#x60;state&#x60; parameter for each individual state.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../meta/filtering) for more details.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "state" (string) Only return pull requests that are in this state. This parameter can be repeated.
-@return PaginatedPullrequests*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsGet(ctx context.Context, username string, repoSlug string, localVarOptionals map[string]interface{}) (PaginatedPullrequests, *http.Response, error) {
+/* PullrequestsApiService 
+ Returns all pull requests on the specified repository.  By default only open pull requests are returned. This can be controlled using the &#x60;state&#x60; query parameter. To retrieve pull requests that are in one of multiple states, repeat the &#x60;state&#x60; parameter for each individual state.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../meta/filtering) for more details.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "state" (string) Only return pull requests that are in this state. This parameter can be repeated.
+ @return PaginatedPullrequests*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsGet(ctx context.Context, username string, repoSlug string, localVarOptionals map[string]interface{}) (PaginatedPullrequests,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedPullrequests
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedPullrequests
 	)
 
 	// create path and map variables
@@ -445,7 +623,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsGet(ctx
 		localVarQueryParams.Add("state", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -456,7 +634,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsGet(ctx
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -494,24 +672,25 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsGet(ctx
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Creates a new pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "body" (Pullrequest) The new pull request.  The request URL you POST to becomes the destination repository URL. For this reason, you must specify an explicit source repository in the request object if you want to pull from a different repository (fork).  Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title.
-@return Pullrequest*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPost(ctx context.Context, username string, repoSlug string, localVarOptionals map[string]interface{}) (Pullrequest, *http.Response, error) {
+/* PullrequestsApiService 
+ Creates a new pull request where the destination repository is this repository and the author is the authenticated user.  The minimum required fields to create a pull request are &#x60;title&#x60; and &#x60;source&#x60;, specified by a branch name.  &#x60;&#x60;&#x60; curl https://api.bitbucket.org/2.0/repositories/my-username/my-repository/pullrequests \\     -u my-username:my-password \\     --request POST \\     --header &#39;Content-Type: application/json&#39; \\     --data &#39;{         \&quot;title\&quot;: \&quot;My Title\&quot;,         \&quot;source\&quot;: {             \&quot;branch\&quot;: {                 \&quot;name\&quot;: \&quot;staging\&quot;             }         }     }&#39; &#x60;&#x60;&#x60;  If the pull request&#39;s &#x60;destination&#x60; is not specified, it will default to the &#x60;repository.mainbranch&#x60;. To open a pull request to a different branch, say from a feature branch to a staging branch, specify a &#x60;destination&#x60; (same format as the &#x60;source&#x60;):  &#x60;&#x60;&#x60; {     \&quot;title\&quot;: \&quot;My Title\&quot;,     \&quot;source\&quot;: {         \&quot;branch\&quot;: {             \&quot;name\&quot;: \&quot;my-feature-branch\&quot;         }     },     \&quot;destination\&quot;: {         \&quot;branch\&quot;: {             \&quot;name\&quot;: \&quot;staging\&quot;         }     } } &#x60;&#x60;&#x60;  Reviewers can be specified by adding an array of user objects as the &#x60;reviewers&#x60; property.  &#x60;&#x60;&#x60; {     \&quot;title\&quot;: \&quot;My Title\&quot;,     \&quot;source\&quot;: {         \&quot;branch\&quot;: {             \&quot;name\&quot;: \&quot;my-feature-branch\&quot;         }     },     \&quot;reviewers\&quot;: [         {             \&quot;uuid\&quot;: \&quot;{504c3b62-8120-4f0c-a7bc-87800b9d6f70}\&quot;         }     ] } &#x60;&#x60;&#x60;  Other fields:  * &#x60;description&#x60; - a string * &#x60;close_source_branch&#x60; - boolean that specifies if the source branch should be closed upon merging
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "body" (Pullrequest) The new pull request.  The request URL you POST to becomes the destination repository URL. For this reason, you must specify an explicit source repository in the request object if you want to pull from a different repository (fork).  Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title.
+ @return Pullrequest*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPost(ctx context.Context, username string, repoSlug string, localVarOptionals map[string]interface{}) (Pullrequest,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Pullrequest
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Pullrequest
 	)
 
 	// create path and map variables
@@ -523,8 +702,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPost(ct
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -535,7 +715,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPost(ct
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -577,22 +757,23 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPost(ct
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a paginated list of the pull request&#39;s activity log.  This includes comments that were made by the reviewers, updates and approvals.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param pullRequestId The id of the pull request.
-@return */
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdActivityGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (*http.Response, error) {
+/* PullrequestsApiService 
+ Returns a paginated list of the pull request&#39;s activity log.  This includes comments that were made by the reviewers, updates and approvals.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdActivityGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -605,8 +786,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -617,7 +799,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -654,19 +836,19 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	return localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Redact the authenticated user&#39;s approval of the specified pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return */
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApproveDelete(ctx context.Context, username string, pullRequestId string, repoSlug string) (*http.Response, error) {
+/* PullrequestsApiService 
+ Redact the authenticated user&#39;s approval of the specified pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApproveDelete(ctx context.Context, username string, pullRequestId string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -679,8 +861,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -691,7 +874,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -728,20 +911,20 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	return localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Approve the specified pull request as the authenticated user.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return Participant*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApprovePost(ctx context.Context, username string, pullRequestId string, repoSlug string) (Participant, *http.Response, error) {
+/* PullrequestsApiService 
+ Approve the specified pull request as the authenticated user.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return Participant*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApprovePost(ctx context.Context, username string, pullRequestId string, repoSlug string) (Participant,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Participant
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Participant
 	)
 
 	// create path and map variables
@@ -754,8 +937,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -766,7 +950,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -804,24 +988,24 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a specific pull request comment.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param commentId
-@param repoSlug
-@return PullrequestComment*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdGet(ctx context.Context, username string, pullRequestId string, commentId string, repoSlug string) (PullrequestComment, *http.Response, error) {
+/* PullrequestsApiService 
+ Deletes a specific pull request comment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param commentId 
+ @param repoSlug 
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdDelete(ctx context.Context, username string, pullRequestId string, commentId string, repoSlug string) ( *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PullrequestComment
+		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -835,8 +1019,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -847,7 +1032,85 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns a specific pull request comment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param commentId 
+ @param repoSlug 
+ @return PullrequestComment*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdGet(ctx context.Context, username string, pullRequestId string, commentId string, repoSlug string) (PullrequestComment,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PullrequestComment
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"pull_request_id"+"}", fmt.Sprintf("%v", pullRequestId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -885,23 +1148,110 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a paginated list of the pull request&#39;s comments.  This includes both global, inline comments and replies.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../../../meta/filtering) for more details.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param pullRequestId The id of the pull request.
-@return PaginatedPullrequestComments*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (PaginatedPullrequestComments, *http.Response, error) {
+/* PullrequestsApiService 
+ Updates a specific pull request comment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param commentId 
+ @param repoSlug 
+ @param body The contents of the updated comment.
+ @return PullrequestComment*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdPut(ctx context.Context, username string, pullRequestId string, commentId string, repoSlug string, body PullrequestComment) (PullrequestComment,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Put")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PullrequestComment
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"pull_request_id"+"}", fmt.Sprintf("%v", pullRequestId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"comment_id"+"}", fmt.Sprintf("%v", commentId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns a paginated list of the pull request&#39;s comments.  This includes both global, inline comments and replies.  The default sorting is oldest to newest and can be overridden with the &#x60;sort&#x60; query parameter.  This endpoint also supports filtering and sorting of the results. See [filtering and sorting](../../../../../../meta/filtering) for more details.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @return PaginatedPullrequestComments*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (PaginatedPullrequestComments,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedPullrequestComments
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedPullrequestComments
 	)
 
 	// create path and map variables
@@ -914,8 +1264,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -926,7 +1277,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -964,23 +1315,108 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns a paginated list of the pull request&#39;s commits.  These are the commits that are being merged into the destination branch when the pull requests gets accepted.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommitsGet(ctx context.Context, username string, pullRequestId string, repoSlug string) (map[string]interface{}, *http.Response, error) {
+/* PullrequestsApiService 
+ Creates a new pull request comment.  Returns the newly created pull request comment.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @param body The comment object.
+ @return PullrequestComment*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsPost(ctx context.Context, username string, repoSlug string, pullRequestId int32, body PullrequestComment) (PullrequestComment,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PullrequestComment
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"pull_request_id"+"}", fmt.Sprintf("%v", pullRequestId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return successPayload, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return successPayload, localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+		return successPayload, localVarHttpResponse, err
+	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns a paginated list of the pull request&#39;s commits.  These are the commits that are being merged into the destination branch when the pull requests gets accepted.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return ModelError*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommitsGet(ctx context.Context, username string, pullRequestId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     map[string]interface{}
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -993,8 +1429,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1005,7 +1442,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1043,23 +1480,24 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Declines the pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return Pullrequest*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDeclinePost(ctx context.Context, username string, pullRequestId string, repoSlug string) (Pullrequest, *http.Response, error) {
+/* PullrequestsApiService 
+ Declines the pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return Pullrequest*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDeclinePost(ctx context.Context, username string, pullRequestId string, repoSlug string) (Pullrequest,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Pullrequest
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Pullrequest
 	)
 
 	// create path and map variables
@@ -1072,8 +1510,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1084,7 +1523,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1122,23 +1561,23 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDiffGet(ctx context.Context, username string, pullRequestId string, repoSlug string) (ModelError, *http.Response, error) {
+/* PullrequestsApiService 
+ Redirects to the [repository diff](../../diff/%7Bspec%7D) with the revspec that corresponds to the pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDiffGet(ctx context.Context, username string, pullRequestId string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
 	)
 
 	// create path and map variables
@@ -1151,8 +1590,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1163,7 +1603,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1184,40 +1624,111 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return successPayload, nil, err
+		return nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return successPayload, localVarHttpResponse, err
+		return localVarHttpResponse, err
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
-		return successPayload, localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
 	}
 
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-		return successPayload, localVarHttpResponse, err
-	}
-
-	return successPayload, localVarHttpResponse, err
+	return localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns the specified pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param pullRequestId The id of the pull request.
-@return Pullrequest*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (Pullrequest, *http.Response, error) {
+/* PullrequestsApiService 
+ Redirects to the [repository diffstat](../../diffstat/%7Bspec%7D) with the revspec that corresponds to the pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return */
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDiffstatGet(ctx context.Context, username string, pullRequestId string, repoSlug string) ( *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Pullrequest
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/diffstat"
+	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"pull_request_id"+"}", fmt.Sprintf("%v", pullRequestId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["Authorization"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+	defer localVarHttpResponse.Body.Close()
+	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		return localVarHttpResponse, reportError("Status: %v, Body: %s", localVarHttpResponse.Status, bodyBytes)
+	}
+
+	return localVarHttpResponse, err
+}
+
+/* PullrequestsApiService 
+ Returns the specified pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @return Pullrequest*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (Pullrequest,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Pullrequest
 	)
 
 	// create path and map variables
@@ -1230,8 +1741,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1242,7 +1754,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1280,25 +1792,26 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Merges the pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "body" (PullrequestMergeParameters)
-@return Pullrequest*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdMergePost(ctx context.Context, username string, pullRequestId string, repoSlug string, localVarOptionals map[string]interface{}) (Pullrequest, *http.Response, error) {
+/* PullrequestsApiService 
+ Merges the pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "body" (PullrequestMergeParameters) 
+ @return Pullrequest*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdMergePost(ctx context.Context, username string, pullRequestId string, repoSlug string, localVarOptionals map[string]interface{}) (Pullrequest,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Pullrequest
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Pullrequest
 	)
 
 	// create path and map variables
@@ -1311,8 +1824,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1323,7 +1837,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1331,7 +1845,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = localVarOptionals["body"]
+	if localVarTempParam, localVarOk := localVarOptionals["body"].(PullrequestMergeParameters); localVarOk {
+		localVarPostBody = &localVarTempParam
+	}
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -1363,23 +1879,24 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param pullRequestId
-@param repoSlug
-@return ModelError*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPatchGet(ctx context.Context, username string, pullRequestId string, repoSlug string) (ModelError, *http.Response, error) {
+/* PullrequestsApiService 
+ 
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username 
+ @param pullRequestId 
+ @param repoSlug 
+ @return ModelError*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPatchGet(ctx context.Context, username string, pullRequestId string, repoSlug string) (ModelError,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     ModelError
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  ModelError
 	)
 
 	// create path and map variables
@@ -1392,8 +1909,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1404,7 +1922,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1442,25 +1960,26 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Mutates the specified pull request.  This can be used to change the pull request&#39;s branches or description.  Only open pull requests can be mutated.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.
-@param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.
-@param pullRequestId The id of the open pull request.
-@param optional (nil or map[string]interface{}) with one or more of:
-    @param "body" (Pullrequest) The pull request that is to be updated.
-@return Pullrequest*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPut(ctx context.Context, username string, repoSlug string, pullRequestId int32, localVarOptionals map[string]interface{}) (Pullrequest, *http.Response, error) {
+/* PullrequestsApiService 
+ Mutates the specified pull request.  This can be used to change the pull request&#39;s branches or description.  Only open pull requests can be mutated.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @param pullRequestId The id of the pull request.
+ @param optional (nil or map[string]interface{}) with one or more of:
+     @param "body" (Pullrequest) The pull request that is to be updated.
+ @return Pullrequest*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPut(ctx context.Context, username string, repoSlug string, pullRequestId int32, localVarOptionals map[string]interface{}) (Pullrequest,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     Pullrequest
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  Pullrequest
 	)
 
 	// create path and map variables
@@ -1473,8 +1992,9 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1485,7 +2005,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1527,37 +2047,39 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
 
-/* PullrequestsApiService
-Returns all statuses (e.g. build results) for the given pull request.
-* @param ctx context.Context for authentication, logging, tracing, etc.
-@param username
-@param repoSlug
-@param pullRequestId The pull request&#39;s id
-@return PaginatedCommitstatuses*/
-func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet(ctx context.Context, username string, repoSlug string, pullRequestId int32) (PaginatedCommitstatuses, *http.Response, error) {
+/* PullrequestsApiService 
+ Returns all statuses (e.g. build results) for the given pull request.
+ * @param ctx context.Context for authentication, logging, tracing, etc.
+ @param username This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user. 
+ @param pullRequestId The id of the pull request.
+ @param repoSlug This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;. 
+ @return PaginatedCommitstatuses*/
+func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet(ctx context.Context, username string, pullRequestId int32, repoSlug string) (PaginatedCommitstatuses,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		successPayload     PaginatedCommitstatuses
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  PaginatedCommitstatuses
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/statuses"
 	localVarPath = strings.Replace(localVarPath, "{"+"username"+"}", fmt.Sprintf("%v", username), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"pull_request_id"+"}", fmt.Sprintf("%v", pullRequestId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repo_slug"+"}", fmt.Sprintf("%v", repoSlug), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{ "application/json",  }
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -1568,7 +2090,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 	// to determine the Accept header
 	localVarHttpHeaderAccepts := []string{
 		"application/json",
-	}
+		}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -1606,5 +2128,7 @@ func (a *PullrequestsApiService) RepositoriesUsernameRepoSlugPullrequestsPullReq
 		return successPayload, localVarHttpResponse, err
 	}
 
+
 	return successPayload, localVarHttpResponse, err
 }
+

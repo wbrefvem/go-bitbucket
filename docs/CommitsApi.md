@@ -6,9 +6,10 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**RepositoriesUsernameRepoSlugCommitNodeApproveDelete**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeApproveDelete) | **Delete** /repositories/{username}/{repo_slug}/commit/{node}/approve | 
 [**RepositoriesUsernameRepoSlugCommitNodeApprovePost**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeApprovePost) | **Post** /repositories/{username}/{repo_slug}/commit/{node}/approve | 
-[**RepositoriesUsernameRepoSlugCommitRevisionGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitRevisionGet) | **Get** /repositories/{username}/{repo_slug}/commit/{revision} | 
-[**RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet) | **Get** /repositories/{username}/{repo_slug}/commit/{sha}/comments/{comment_id} | 
-[**RepositoriesUsernameRepoSlugCommitShaCommentsGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitShaCommentsGet) | **Get** /repositories/{username}/{repo_slug}/commit/{sha}/comments | 
+[**RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet) | **Get** /repositories/{username}/{repo_slug}/commit/{node}/comments/{comment_id} | 
+[**RepositoriesUsernameRepoSlugCommitNodeCommentsGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeCommentsGet) | **Get** /repositories/{username}/{repo_slug}/commit/{node}/comments | 
+[**RepositoriesUsernameRepoSlugCommitNodeCommentsPost**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeCommentsPost) | **Post** /repositories/{username}/{repo_slug}/commit/{node}/comments | 
+[**RepositoriesUsernameRepoSlugCommitNodeGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitNodeGet) | **Get** /repositories/{username}/{repo_slug}/commit/{node} | 
 [**RepositoriesUsernameRepoSlugCommitsGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitsGet) | **Get** /repositories/{username}/{repo_slug}/commits | 
 [**RepositoriesUsernameRepoSlugCommitsPost**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitsPost) | **Post** /repositories/{username}/{repo_slug}/commits | 
 [**RepositoriesUsernameRepoSlugCommitsRevisionGet**](CommitsApi.md#RepositoriesUsernameRepoSlugCommitsRevisionGet) | **Get** /repositories/{username}/{repo_slug}/commits/{revision} | 
@@ -18,7 +19,7 @@ Method | HTTP request | Description
 
 
 # **RepositoriesUsernameRepoSlugCommitNodeApproveDelete**
-> RepositoriesUsernameRepoSlugCommitNodeApproveDelete(ctx, username, repoSlug, node)
+> RepositoriesUsernameRepoSlugCommitNodeApproveDelete(ctx, username, node, repoSlug)
 
 
 Redact the authenticated user's approval of the specified commit.  This operation is only available to users that have explicit access to the repository. In contrast, just the fact that a repository is publicly accessible to users does not give them the ability to approve commits.
@@ -28,9 +29,9 @@ Redact the authenticated user's approval of the specified commit.  This operatio
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
   **node** | **string**| The commit&#39;s SHA1. | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -48,7 +49,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **RepositoriesUsernameRepoSlugCommitNodeApprovePost**
-> Participant RepositoriesUsernameRepoSlugCommitNodeApprovePost(ctx, username, repoSlug, node)
+> Participant RepositoriesUsernameRepoSlugCommitNodeApprovePost(ctx, username, node, repoSlug)
 
 
 Approve the specified commit as the authenticated user.  This operation is only available to users that have explicit access to the repository. In contrast, just the fact that a repository is publicly accessible to users does not give them the ability to approve commits.
@@ -58,9 +59,9 @@ Approve the specified commit as the authenticated user.  This operation is only 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
   **node** | **string**| The commit&#39;s SHA1. | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -77,38 +78,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **RepositoriesUsernameRepoSlugCommitRevisionGet**
-> Commit RepositoriesUsernameRepoSlugCommitRevisionGet(ctx, username, repoSlug, revision)
-
-
-Returns the specified commit.
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
-  **revision** | **string**| The commit&#39;s SHA1. | 
-
-### Return type
-
-[**Commit**](commit.md)
-
-### Authorization
-
-[api_key](../README.md#api_key), [basic](../README.md#basic), [oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet**
-> ModelError RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet(ctx, username, sha, commentId, repoSlug)
+# **RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet**
+> CommitComment RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet(ctx, username, node, commentId, repoSlug)
 
 
 Returns the specified commit comment.
@@ -118,14 +89,14 @@ Returns the specified commit comment.
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **sha** | **string**|  | 
-  **commentId** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **node** | **string**| The commit&#39;s SHA1. | 
+  **commentId** | **int32**| The id of the comment. | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
-[**ModelError**](error.md)
+[**CommitComment**](commit_comment.md)
 
 ### Authorization
 
@@ -138,8 +109,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **RepositoriesUsernameRepoSlugCommitShaCommentsGet**
-> ModelError RepositoriesUsernameRepoSlugCommitShaCommentsGet(ctx, username, sha, repoSlug)
+# **RepositoriesUsernameRepoSlugCommitNodeCommentsGet**
+> PaginatedCommitComments RepositoriesUsernameRepoSlugCommitNodeCommentsGet(ctx, username, node, repoSlug)
 
 
 Returns the commit's comments.  This includes both global and inline comments.  The default sorting is oldest to newest and can be overridden with the `sort` query parameter.
@@ -149,13 +120,74 @@ Returns the commit's comments.  This includes both global and inline comments.  
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **sha** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **node** | **string**| The commit&#39;s SHA1. | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
-[**ModelError**](error.md)
+[**PaginatedCommitComments**](paginated_commit_comments.md)
+
+### Authorization
+
+[api_key](../README.md#api_key), [basic](../README.md#basic), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **RepositoriesUsernameRepoSlugCommitNodeCommentsPost**
+> RepositoriesUsernameRepoSlugCommitNodeCommentsPost(ctx, node, username, repoSlug, body)
+
+
+Creates new comment on the specified commit.  To post a reply to an existing comment, include the `parent.id` field:  ``` $ curl https://api.bitbucket.org/2.0/repositories/atlassian/prlinks/commit/db9ba1e031d07a02603eae0e559a7adc010257fc/comments/ \\   -X POST -u evzijst \\   -H 'Content-Type: application/json' \\   -d '{\"content\": {\"raw\": \"One more thing!\"},        \"parent\": {\"id\": 5728901}}' ```
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **node** | **string**| The commit&#39;s SHA1. | 
+  **username** | **string**| This can either be the username or the UUID of the user, surrounded by curly-braces, for example: &#x60;{user UUID}&#x60;.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
+  **body** | [**CommitComment**](CommitComment.md)| The specified comment. | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[api_key](../README.md#api_key), [basic](../README.md#basic), [oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **RepositoriesUsernameRepoSlugCommitNodeGet**
+> Commit RepositoriesUsernameRepoSlugCommitNodeGet(ctx, username, node, repoSlug)
+
+
+Returns the specified commit.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **node** | **string**| The commit&#39;s SHA1. | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
+
+### Return type
+
+[**Commit**](commit.md)
 
 ### Authorization
 
@@ -179,8 +211,8 @@ These are the repository's commits. They are paginated and returned in reverse c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -208,8 +240,8 @@ Identical to `GET /repositories/{username}/{repo_slug}/commits`, except that POS
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -237,9 +269,9 @@ These are the repository's commits. They are paginated and returned in reverse c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
   **revision** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -267,9 +299,9 @@ Identical to `GET /repositories/{username}/{repo_slug}/commits`, except that POS
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for logging, tracing, authentication, etc.
-  **username** | **string**|  | 
+  **username** | **string**| This can either be the username or the UUID of the account, surrounded by curly-braces, for example: &#x60;{account UUID}&#x60;. An account is either a team or user.  | 
   **revision** | **string**|  | 
-  **repoSlug** | **string**|  | 
+  **repoSlug** | **string**| This can either be the repository slug or the UUID of the repository, surrounded by curly-braces, for example: &#x60;{repository UUID}&#x60;.  | 
 
 ### Return type
 
@@ -313,6 +345,7 @@ Name | Type | Description  | Notes
  **context** | **int32**| Generate diffs with &lt;n&gt; lines of context instead of the usual three | 
  **path** | **string**| Limit the diff to a particular file (this parameter can be repeated for multiple paths) | 
  **ignoreWhitespace** | **bool**| Generate diffs that ignore whitespace | 
+ **binary** | **bool**| Generate diffs that include binary files,true if omitted. | 
 
 ### Return type
 

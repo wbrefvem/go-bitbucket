@@ -1,4 +1,4 @@
-# Go API client for bitbucket
+# Go API client for swagger
 
 Code against the Bitbucket API to automate simple tasks, embed Bitbucket data into your own site, build mobile or desktop apps, or even add custom UI add-ons into Bitbucket itself using the Connect framework.
 
@@ -13,7 +13,7 @@ For more information, please visit [https://support.atlassian.com/bitbucket-clou
 ## Installation
 Put the package under your project folder and add the following in import:
 ```
-    "./bitbucket"
+    "./swagger"
 ```
 
 ## Documentation for API Endpoints
@@ -32,6 +32,7 @@ Class | Method | HTTP request | Description
 *AddonApi* | [**AddonLinkersLinkerKeyValuesPost**](docs/AddonApi.md#addonlinkerslinkerkeyvaluespost) | **Post** /addon/linkers/{linker_key}/values | 
 *AddonApi* | [**AddonLinkersLinkerKeyValuesPut**](docs/AddonApi.md#addonlinkerslinkerkeyvaluesput) | **Put** /addon/linkers/{linker_key}/values | 
 *AddonApi* | [**AddonPut**](docs/AddonApi.md#addonput) | **Put** /addon | 
+*AddonApi* | [**AddonUsersTargetUserEventsEventKeyPost**](docs/AddonApi.md#addonuserstargetusereventseventkeypost) | **Post** /addon/users/{target_user}/events/{event_key} | 
 *BranchrestrictionsApi* | [**RepositoriesUsernameRepoSlugBranchRestrictionsGet**](docs/BranchrestrictionsApi.md#repositoriesusernamereposlugbranchrestrictionsget) | **Get** /repositories/{username}/{repo_slug}/branch-restrictions | 
 *BranchrestrictionsApi* | [**RepositoriesUsernameRepoSlugBranchRestrictionsIdDelete**](docs/BranchrestrictionsApi.md#repositoriesusernamereposlugbranchrestrictionsiddelete) | **Delete** /repositories/{username}/{repo_slug}/branch-restrictions/{id} | 
 *BranchrestrictionsApi* | [**RepositoriesUsernameRepoSlugBranchRestrictionsIdGet**](docs/BranchrestrictionsApi.md#repositoriesusernamereposlugbranchrestrictionsidget) | **Get** /repositories/{username}/{repo_slug}/branch-restrictions/{id} | 
@@ -39,9 +40,10 @@ Class | Method | HTTP request | Description
 *BranchrestrictionsApi* | [**RepositoriesUsernameRepoSlugBranchRestrictionsPost**](docs/BranchrestrictionsApi.md#repositoriesusernamereposlugbranchrestrictionspost) | **Post** /repositories/{username}/{repo_slug}/branch-restrictions | 
 *CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeApproveDelete**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodeapprovedelete) | **Delete** /repositories/{username}/{repo_slug}/commit/{node}/approve | 
 *CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeApprovePost**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodeapprovepost) | **Post** /repositories/{username}/{repo_slug}/commit/{node}/approve | 
-*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitRevisionGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitrevisionget) | **Get** /repositories/{username}/{repo_slug}/commit/{revision} | 
-*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitShaCommentsCommentIdGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitshacommentscommentidget) | **Get** /repositories/{username}/{repo_slug}/commit/{sha}/comments/{comment_id} | 
-*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitShaCommentsGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitshacommentsget) | **Get** /repositories/{username}/{repo_slug}/commit/{sha}/comments | 
+*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeCommentsCommentIdGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodecommentscommentidget) | **Get** /repositories/{username}/{repo_slug}/commit/{node}/comments/{comment_id} | 
+*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeCommentsGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodecommentsget) | **Get** /repositories/{username}/{repo_slug}/commit/{node}/comments | 
+*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeCommentsPost**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodecommentspost) | **Post** /repositories/{username}/{repo_slug}/commit/{node}/comments | 
+*CommitsApi* | [**RepositoriesUsernameRepoSlugCommitNodeGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitnodeget) | **Get** /repositories/{username}/{repo_slug}/commit/{node} | 
 *CommitsApi* | [**RepositoriesUsernameRepoSlugCommitsGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitsget) | **Get** /repositories/{username}/{repo_slug}/commits | 
 *CommitsApi* | [**RepositoriesUsernameRepoSlugCommitsPost**](docs/CommitsApi.md#repositoriesusernamereposlugcommitspost) | **Post** /repositories/{username}/{repo_slug}/commits | 
 *CommitsApi* | [**RepositoriesUsernameRepoSlugCommitsRevisionGet**](docs/CommitsApi.md#repositoriesusernamereposlugcommitsrevisionget) | **Get** /repositories/{username}/{repo_slug}/commits/{revision} | 
@@ -53,14 +55,27 @@ Class | Method | HTTP request | Description
 *CommitstatusesApi* | [**RepositoriesUsernameRepoSlugCommitNodeStatusesBuildPost**](docs/CommitstatusesApi.md#repositoriesusernamereposlugcommitnodestatusesbuildpost) | **Post** /repositories/{username}/{repo_slug}/commit/{node}/statuses/build | 
 *CommitstatusesApi* | [**RepositoriesUsernameRepoSlugCommitNodeStatusesGet**](docs/CommitstatusesApi.md#repositoriesusernamereposlugcommitnodestatusesget) | **Get** /repositories/{username}/{repo_slug}/commit/{node}/statuses | 
 *CommitstatusesApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet**](docs/CommitstatusesApi.md#repositoriesusernamereposlugpullrequestspullrequestidstatusesget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/statuses | 
+*DefaultApi* | [**RepositoriesUsernameRepoSlugDiffstatSpecGet**](docs/DefaultApi.md#repositoriesusernamereposlugdiffstatspecget) | **Get** /repositories/{username}/{repo_slug}/diffstat/{spec} | 
+*DefaultApi* | [**RepositoriesUsernameRepoSlugIssuesExportPost**](docs/DefaultApi.md#repositoriesusernamereposlugissuesexportpost) | **Post** /repositories/{username}/{repo_slug}/issues/export | 
+*DefaultApi* | [**RepositoriesUsernameRepoSlugIssuesExportRepoNameIssuesTaskIdZipGet**](docs/DefaultApi.md#repositoriesusernamereposlugissuesexportreponameissuestaskidzipget) | **Get** /repositories/{username}/{repo_slug}/issues/export/{repo_name}-issues-{task_id}.zip | 
+*DefaultApi* | [**RepositoriesUsernameRepoSlugIssuesImportGet**](docs/DefaultApi.md#repositoriesusernamereposlugissuesimportget) | **Get** /repositories/{username}/{repo_slug}/issues/import | 
+*DefaultApi* | [**RepositoriesUsernameRepoSlugIssuesImportPost**](docs/DefaultApi.md#repositoriesusernamereposlugissuesimportpost) | **Post** /repositories/{username}/{repo_slug}/issues/import | 
 *DefaultApi* | [**RepositoriesUsernameRepoSlugPropertiesAppKeyPropertyNameDelete**](docs/DefaultApi.md#repositoriesusernamereposlugpropertiesappkeypropertynamedelete) | **Delete** /repositories/{username}/{repo_slug}/properties/{app_key}/{property_name} | 
 *DefaultApi* | [**RepositoriesUsernameRepoSlugPropertiesAppKeyPropertyNameGet**](docs/DefaultApi.md#repositoriesusernamereposlugpropertiesappkeypropertynameget) | **Get** /repositories/{username}/{repo_slug}/properties/{app_key}/{property_name} | 
 *DefaultApi* | [**RepositoriesUsernameRepoSlugPropertiesAppKeyPropertyNamePut**](docs/DefaultApi.md#repositoriesusernamereposlugpropertiesappkeypropertynameput) | **Put** /repositories/{username}/{repo_slug}/properties/{app_key}/{property_name} | 
 *DefaultApi* | [**TeamsUsernamePermissionsGet**](docs/DefaultApi.md#teamsusernamepermissionsget) | **Get** /teams/{username}/permissions | 
 *DefaultApi* | [**TeamsUsernamePermissionsRepositoriesGet**](docs/DefaultApi.md#teamsusernamepermissionsrepositoriesget) | **Get** /teams/{username}/permissions/repositories | 
-*DefaultApi* | [**TeamsUsernameSearchCodeGet**](docs/DefaultApi.md#teamsusernamesearchcodeget) | **Get** /teams/{username}/search/code | 
 *DefaultApi* | [**UserPermissionsTeamsGet**](docs/DefaultApi.md#userpermissionsteamsget) | **Get** /user/permissions/teams | 
-*DefaultApi* | [**UsersUsernameSearchCodeGet**](docs/DefaultApi.md#usersusernamesearchcodeget) | **Get** /users/{username}/search/code | 
+*DeployApi* | [**RepositoriesUsernameRepoSlugDeployKeysGet**](docs/DeployApi.md#repositoriesusernamereposlugdeploykeysget) | **Get** /repositories/{username}/{repo_slug}/deploy-keys | 
+*DeployApi* | [**RepositoriesUsernameRepoSlugDeployKeysKeyIdDelete**](docs/DeployApi.md#repositoriesusernamereposlugdeploykeyskeyiddelete) | **Delete** /repositories/{username}/{repo_slug}/deploy-keys/{key_id} | 
+*DeployApi* | [**RepositoriesUsernameRepoSlugDeployKeysKeyIdGet**](docs/DeployApi.md#repositoriesusernamereposlugdeploykeyskeyidget) | **Get** /repositories/{username}/{repo_slug}/deploy-keys/{key_id} | 
+*DeployApi* | [**RepositoriesUsernameRepoSlugDeployKeysKeyIdPut**](docs/DeployApi.md#repositoriesusernamereposlugdeploykeyskeyidput) | **Put** /repositories/{username}/{repo_slug}/deploy-keys/{key_id} | 
+*DeployApi* | [**RepositoriesUsernameRepoSlugDeployKeysPost**](docs/DeployApi.md#repositoriesusernamereposlugdeploykeyspost) | **Post** /repositories/{username}/{repo_slug}/deploy-keys | 
+*DeploymentsApi* | [**GetDeploymentForRepository**](docs/DeploymentsApi.md#getdeploymentforrepository) | **Get** /repositories/{username}/{repo_slug}/deployments/{deployment_uuid} | 
+*DeploymentsApi* | [**GetDeploymentsForRepository**](docs/DeploymentsApi.md#getdeploymentsforrepository) | **Get** /repositories/{username}/{repo_slug}/deployments/ | 
+*DeploymentsApi* | [**GetEnvironmentForRepository**](docs/DeploymentsApi.md#getenvironmentforrepository) | **Get** /repositories/{username}/{repo_slug}/environments/{environment_uuid} | 
+*DeploymentsApi* | [**GetEnvironmentsForRepository**](docs/DeploymentsApi.md#getenvironmentsforrepository) | **Get** /repositories/{username}/{repo_slug}/environments/ | 
+*DeploymentsApi* | [**UpdateEnvironmentForRepository**](docs/DeploymentsApi.md#updateenvironmentforrepository) | **Post** /repositories/{username}/{repo_slug}/environments/{environment_uuid}/changes/ | 
 *DownloadsApi* | [**RepositoriesUsernameRepoSlugDownloadsFilenameDelete**](docs/DownloadsApi.md#repositoriesusernamereposlugdownloadsfilenamedelete) | **Delete** /repositories/{username}/{repo_slug}/downloads/{filename} | 
 *DownloadsApi* | [**RepositoriesUsernameRepoSlugDownloadsFilenameGet**](docs/DownloadsApi.md#repositoriesusernamereposlugdownloadsfilenameget) | **Get** /repositories/{username}/{repo_slug}/downloads/{filename} | 
 *DownloadsApi* | [**RepositoriesUsernameRepoSlugDownloadsGet**](docs/DownloadsApi.md#repositoriesusernamereposlugdownloadsget) | **Get** /repositories/{username}/{repo_slug}/downloads | 
@@ -75,8 +90,11 @@ Class | Method | HTTP request | Description
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdChangesChangeIdGet**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidchangeschangeidget) | **Get** /repositories/{username}/{repo_slug}/issues/{issue_id}/changes/{change_id} | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdChangesGet**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidchangesget) | **Get** /repositories/{username}/{repo_slug}/issues/{issue_id}/changes | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdChangesPost**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidchangespost) | **Post** /repositories/{username}/{repo_slug}/issues/{issue_id}/changes | 
+*IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdDelete**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidcommentscommentiddelete) | **Delete** /repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id} | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdGet**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidcommentscommentidget) | **Get** /repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id} | 
+*IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdCommentsCommentIdPut**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidcommentscommentidput) | **Put** /repositories/{username}/{repo_slug}/issues/{issue_id}/comments/{comment_id} | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdCommentsGet**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidcommentsget) | **Get** /repositories/{username}/{repo_slug}/issues/{issue_id}/comments | 
+*IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdCommentsPost**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidcommentspost) | **Post** /repositories/{username}/{repo_slug}/issues/{issue_id}/comments | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdDelete**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueiddelete) | **Delete** /repositories/{username}/{repo_slug}/issues/{issue_id} | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdGet**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidget) | **Get** /repositories/{username}/{repo_slug}/issues/{issue_id} | 
 *IssueTrackerApi* | [**RepositoriesUsernameRepoSlugIssuesIssueIdPut**](docs/IssueTrackerApi.md#repositoriesusernamereposlugissuesissueidput) | **Put** /repositories/{username}/{repo_slug}/issues/{issue_id} | 
@@ -135,6 +153,8 @@ Class | Method | HTTP request | Description
 *ProjectsApi* | [**TeamsUsernameProjectsProjectKeyDelete**](docs/ProjectsApi.md#teamsusernameprojectsprojectkeydelete) | **Delete** /teams/{username}/projects/{project_key} | 
 *ProjectsApi* | [**TeamsUsernameProjectsProjectKeyGet**](docs/ProjectsApi.md#teamsusernameprojectsprojectkeyget) | **Get** /teams/{username}/projects/{project_key} | 
 *ProjectsApi* | [**TeamsUsernameProjectsProjectKeyPut**](docs/ProjectsApi.md#teamsusernameprojectsprojectkeyput) | **Put** /teams/{username}/projects/{project_key} | 
+*PullrequestsApi* | [**GetPullrequestsForCommit**](docs/PullrequestsApi.md#getpullrequestsforcommit) | **Get** /repositories/{username}/{repo_slug}/commit/{commit}/pullrequests | Returns a paginated list of all pull requests as part of which this commit was reviewed.
+*PullrequestsApi* | [**PullrequestsTargetUserGet**](docs/PullrequestsApi.md#pullrequeststargetuserget) | **Get** /pullrequests/{target_user} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugDefaultReviewersGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugdefaultreviewersget) | **Get** /repositories/{username}/{repo_slug}/default-reviewers | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameDelete**](docs/PullrequestsApi.md#repositoriesusernamereposlugdefaultreviewerstargetusernamedelete) | **Delete** /repositories/{username}/{repo_slug}/default-reviewers/{target_username} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugDefaultReviewersTargetUsernameGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugdefaultreviewerstargetusernameget) | **Get** /repositories/{username}/{repo_slug}/default-reviewers/{target_username} | 
@@ -145,20 +165,27 @@ Class | Method | HTTP request | Description
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdActivityGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidactivityget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/activity | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApproveDelete**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidapprovedelete) | **Delete** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/approve | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdApprovePost**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidapprovepost) | **Post** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/approve | 
+*PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdDelete**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommentscommentiddelete) | **Delete** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommentscommentidget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id} | 
+*PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsCommentIdPut**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommentscommentidput) | **Put** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommentsget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments | 
+*PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommentsPost**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommentspost) | **Post** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/comments | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdCommitsGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidcommitsget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/commits | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDeclinePost**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestiddeclinepost) | **Post** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/decline | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDiffGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestiddiffget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/diff | 
+*PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdDiffstatGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestiddiffstatget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/diffstat | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdMergePost**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidmergepost) | **Post** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/merge | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPatchGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidpatchget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/patch | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdPut**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidput) | **Put** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id} | 
 *PullrequestsApi* | [**RepositoriesUsernameRepoSlugPullrequestsPullRequestIdStatusesGet**](docs/PullrequestsApi.md#repositoriesusernamereposlugpullrequestspullrequestidstatusesget) | **Get** /repositories/{username}/{repo_slug}/pullrequests/{pull_request_id}/statuses | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsBranchesGet**](docs/RefsApi.md#repositoriesusernamereposlugrefsbranchesget) | **Get** /repositories/{username}/{repo_slug}/refs/branches | 
+*RefsApi* | [**RepositoriesUsernameRepoSlugRefsBranchesNameDelete**](docs/RefsApi.md#repositoriesusernamereposlugrefsbranchesnamedelete) | **Delete** /repositories/{username}/{repo_slug}/refs/branches/{name} | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsBranchesNameGet**](docs/RefsApi.md#repositoriesusernamereposlugrefsbranchesnameget) | **Get** /repositories/{username}/{repo_slug}/refs/branches/{name} | 
+*RefsApi* | [**RepositoriesUsernameRepoSlugRefsBranchesPost**](docs/RefsApi.md#repositoriesusernamereposlugrefsbranchespost) | **Post** /repositories/{username}/{repo_slug}/refs/branches | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsGet**](docs/RefsApi.md#repositoriesusernamereposlugrefsget) | **Get** /repositories/{username}/{repo_slug}/refs | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsTagsGet**](docs/RefsApi.md#repositoriesusernamereposlugrefstagsget) | **Get** /repositories/{username}/{repo_slug}/refs/tags | 
+*RefsApi* | [**RepositoriesUsernameRepoSlugRefsTagsNameDelete**](docs/RefsApi.md#repositoriesusernamereposlugrefstagsnamedelete) | **Delete** /repositories/{username}/{repo_slug}/refs/tags/{name} | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsTagsNameGet**](docs/RefsApi.md#repositoriesusernamereposlugrefstagsnameget) | **Get** /repositories/{username}/{repo_slug}/refs/tags/{name} | 
 *RefsApi* | [**RepositoriesUsernameRepoSlugRefsTagsPost**](docs/RefsApi.md#repositoriesusernamereposlugrefstagspost) | **Post** /repositories/{username}/{repo_slug}/refs/tags | 
 *RepositoriesApi* | [**RepositoriesGet**](docs/RepositoriesApi.md#repositoriesget) | **Get** /repositories | 
@@ -185,6 +212,9 @@ Class | Method | HTTP request | Description
 *RepositoriesApi* | [**RepositoriesUsernameRepoSlugSrcPost**](docs/RepositoriesApi.md#repositoriesusernamereposlugsrcpost) | **Post** /repositories/{username}/{repo_slug}/src | 
 *RepositoriesApi* | [**RepositoriesUsernameRepoSlugWatchersGet**](docs/RepositoriesApi.md#repositoriesusernamereposlugwatchersget) | **Get** /repositories/{username}/{repo_slug}/watchers | 
 *RepositoriesApi* | [**UserPermissionsRepositoriesGet**](docs/RepositoriesApi.md#userpermissionsrepositoriesget) | **Get** /user/permissions/repositories | 
+*SearchApi* | [**SearchAccount**](docs/SearchApi.md#searchaccount) | **Get** /teams/{username}/search/code | Search for code in the repositories of the specified team
+*SearchApi* | [**SearchAccount_0**](docs/SearchApi.md#searchaccount_0) | **Get** /users/{username}/search/code | Search for code in the repositories of the specified user
+*SnippetApi* | [**SnippetsUsernameEncodedIdFilesPathGet**](docs/SnippetApi.md#snippetsusernameencodedidfilespathget) | **Get** /snippets/{username}/{encoded_id}/files/{path} | 
 *SnippetsApi* | [**SnippetsGet**](docs/SnippetsApi.md#snippetsget) | **Get** /snippets | 
 *SnippetsApi* | [**SnippetsPost**](docs/SnippetsApi.md#snippetspost) | **Post** /snippets | 
 *SnippetsApi* | [**SnippetsUsernameEncodedIdCommentsCommentIdDelete**](docs/SnippetsApi.md#snippetsusernameencodedidcommentscommentiddelete) | **Delete** /snippets/{username}/{encoded_id}/comments/{comment_id} | 
@@ -229,6 +259,7 @@ Class | Method | HTTP request | Description
 *TeamsApi* | [**TeamsUsernameHooksUidPut**](docs/TeamsApi.md#teamsusernamehooksuidput) | **Put** /teams/{username}/hooks/{uid} | 
 *TeamsApi* | [**TeamsUsernameMembersGet**](docs/TeamsApi.md#teamsusernamemembersget) | **Get** /teams/{username}/members | 
 *TeamsApi* | [**TeamsUsernameRepositoriesGet**](docs/TeamsApi.md#teamsusernamerepositoriesget) | **Get** /teams/{username}/repositories | 
+*TeamsApi* | [**UsersUsernameMembersGet**](docs/TeamsApi.md#usersusernamemembersget) | **Get** /users/{username}/members | 
 *TeamsApi* | [**UsersUsernameRepositoriesGet**](docs/TeamsApi.md#usersusernamerepositoriesget) | **Get** /users/{username}/repositories | 
 *UsersApi* | [**TeamsUsernameRepositoriesGet**](docs/UsersApi.md#teamsusernamerepositoriesget) | **Get** /teams/{username}/repositories | 
 *UsersApi* | [**UserEmailsEmailGet**](docs/UsersApi.md#useremailsemailget) | **Get** /user/emails/{email} | 
@@ -268,8 +299,8 @@ Class | Method | HTTP request | Description
  - [CommentInline](docs/CommentInline.md)
  - [CommentLinks](docs/CommentLinks.md)
  - [CommitFile](docs/CommitFile.md)
- - [CommitLinks](docs/CommitLinks.md)
  - [CommitstatusLinks](docs/CommitstatusLinks.md)
+ - [Diffstat](docs/Diffstat.md)
  - [ErrorError](docs/ErrorError.md)
  - [GroupLinks](docs/GroupLinks.md)
  - [HookEvent](docs/HookEvent.md)
@@ -277,18 +308,25 @@ Class | Method | HTTP request | Description
  - [IssueChangeChanges](docs/IssueChangeChanges.md)
  - [IssueChangeChangesAssignee](docs/IssueChangeChangesAssignee.md)
  - [IssueChangeLinks](docs/IssueChangeLinks.md)
+ - [IssueContent](docs/IssueContent.md)
+ - [IssueJobStatus](docs/IssueJobStatus.md)
  - [IssueLinks](docs/IssueLinks.md)
- - [MilestoneLinks](docs/MilestoneLinks.md)
- - [MilestoneLinksSelf](docs/MilestoneLinksSelf.md)
  - [ModelError](docs/ModelError.md)
  - [Object](docs/Object.md)
  - [Page](docs/Page.md)
+ - [PaginatedBranches](docs/PaginatedBranches.md)
  - [PaginatedBranchrestrictions](docs/PaginatedBranchrestrictions.md)
+ - [PaginatedCommitComments](docs/PaginatedCommitComments.md)
  - [PaginatedCommitstatuses](docs/PaginatedCommitstatuses.md)
  - [PaginatedComponents](docs/PaginatedComponents.md)
+ - [PaginatedDeployKeys](docs/PaginatedDeployKeys.md)
+ - [PaginatedDeployments](docs/PaginatedDeployments.md)
+ - [PaginatedDiffstats](docs/PaginatedDiffstats.md)
+ - [PaginatedEnvironments](docs/PaginatedEnvironments.md)
  - [PaginatedFiles](docs/PaginatedFiles.md)
  - [PaginatedHookEvents](docs/PaginatedHookEvents.md)
  - [PaginatedIssueAttachments](docs/PaginatedIssueAttachments.md)
+ - [PaginatedIssueComments](docs/PaginatedIssueComments.md)
  - [PaginatedIssues](docs/PaginatedIssues.md)
  - [PaginatedLogEntries](docs/PaginatedLogEntries.md)
  - [PaginatedMilestones](docs/PaginatedMilestones.md)
@@ -301,12 +339,14 @@ Class | Method | HTTP request | Description
  - [PaginatedProjects](docs/PaginatedProjects.md)
  - [PaginatedPullrequestComments](docs/PaginatedPullrequestComments.md)
  - [PaginatedPullrequests](docs/PaginatedPullrequests.md)
+ - [PaginatedRefs](docs/PaginatedRefs.md)
  - [PaginatedRepositories](docs/PaginatedRepositories.md)
  - [PaginatedRepositoryPermissions](docs/PaginatedRepositoryPermissions.md)
  - [PaginatedSnippetComments](docs/PaginatedSnippetComments.md)
  - [PaginatedSnippetCommit](docs/PaginatedSnippetCommit.md)
  - [PaginatedSnippets](docs/PaginatedSnippets.md)
  - [PaginatedSshUserKeys](docs/PaginatedSshUserKeys.md)
+ - [PaginatedTags](docs/PaginatedTags.md)
  - [PaginatedTeamPermissions](docs/PaginatedTeamPermissions.md)
  - [PaginatedTeams](docs/PaginatedTeams.md)
  - [PaginatedTreeentries](docs/PaginatedTreeentries.md)
@@ -322,24 +362,37 @@ Class | Method | HTTP request | Description
  - [PullrequestLinks](docs/PullrequestLinks.md)
  - [PullrequestMergeCommit](docs/PullrequestMergeCommit.md)
  - [PullrequestMergeParameters](docs/PullrequestMergeParameters.md)
- - [PullrequestSummary](docs/PullrequestSummary.md)
+ - [PullrequestRendered](docs/PullrequestRendered.md)
+ - [Ref](docs/Ref.md)
+ - [RefLinks](docs/RefLinks.md)
  - [RepositoryLinks](docs/RepositoryLinks.md)
  - [RepositoryPermission](docs/RepositoryPermission.md)
- - [SearchResult](docs/SearchResult.md)
+ - [SearchCodeSearchResult](docs/SearchCodeSearchResult.md)
+ - [SearchContentMatch](docs/SearchContentMatch.md)
+ - [SearchLine](docs/SearchLine.md)
+ - [SearchResultPage](docs/SearchResultPage.md)
+ - [SearchSegment](docs/SearchSegment.md)
  - [SnippetCommitLinks](docs/SnippetCommitLinks.md)
  - [SubjectTypes](docs/SubjectTypes.md)
  - [SubjectTypesRepository](docs/SubjectTypesRepository.md)
- - [Tag](docs/Tag.md)
- - [TagLinks](docs/TagLinks.md)
+ - [SubjectTypesRepositoryEvents](docs/SubjectTypesRepositoryEvents.md)
  - [TeamPermission](docs/TeamPermission.md)
  - [Treeentry](docs/Treeentry.md)
+ - [VersionLinks](docs/VersionLinks.md)
  - [Account](docs/Account.md)
  - [Author](docs/Author.md)
  - [BaseCommit](docs/BaseCommit.md)
+ - [Branch](docs/Branch.md)
  - [Branchrestriction](docs/Branchrestriction.md)
  - [Comment](docs/Comment.md)
  - [Commitstatus](docs/Commitstatus.md)
  - [Component](docs/Component.md)
+ - [DeployKey](docs/DeployKey.md)
+ - [Deployment](docs/Deployment.md)
+ - [DeploymentEnvironment](docs/DeploymentEnvironment.md)
+ - [DeploymentRelease](docs/DeploymentRelease.md)
+ - [DeploymentState](docs/DeploymentState.md)
+ - [DeploymentStateCompletedStatus](docs/DeploymentStateCompletedStatus.md)
  - [Group](docs/Group.md)
  - [Issue](docs/Issue.md)
  - [IssueAttachment](docs/IssueAttachment.md)
@@ -371,9 +424,18 @@ Class | Method | HTTP request | Description
  - [Snippet](docs/Snippet.md)
  - [SnippetComment](docs/SnippetComment.md)
  - [SshKey](docs/SshKey.md)
+ - [Tag](docs/Tag.md)
  - [Version](docs/Version.md)
  - [WebhookSubscription](docs/WebhookSubscription.md)
  - [Commit](docs/Commit.md)
+ - [CommitComment](docs/CommitComment.md)
+ - [DeploymentStateCompleted](docs/DeploymentStateCompleted.md)
+ - [DeploymentStateCompletedStatusFailed](docs/DeploymentStateCompletedStatusFailed.md)
+ - [DeploymentStateCompletedStatusStopped](docs/DeploymentStateCompletedStatusStopped.md)
+ - [DeploymentStateCompletedStatusSuccessful](docs/DeploymentStateCompletedStatusSuccessful.md)
+ - [DeploymentStateInProgress](docs/DeploymentStateInProgress.md)
+ - [DeploymentStateUndeployed](docs/DeploymentStateUndeployed.md)
+ - [IssueComment](docs/IssueComment.md)
  - [PipelineCommitTarget](docs/PipelineCommitTarget.md)
  - [PipelineRefTarget](docs/PipelineRefTarget.md)
  - [PipelineScheduleExecutionErrored](docs/PipelineScheduleExecutionErrored.md)

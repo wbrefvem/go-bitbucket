@@ -18,31 +18,31 @@ type Pipeline struct {
 
 	Type_ string `json:"type"`
 
+	// The UUID identifying the pipeline.
+	Uuid string `json:"uuid,omitempty"`
+
 	// The build number of the pipeline.
 	BuildNumber int32 `json:"build_number,omitempty"`
-
-	// The target that the pipeline built.
-	Target *PipelineTarget `json:"target,omitempty"`
-
-	Repository *Repository `json:"repository,omitempty"`
 
 	// The Bitbucket account that was used to create the pipeline.
 	Creator *Account `json:"creator,omitempty"`
 
-	// The timestamp when the pipeline was created.
-	CreatedOn time.Time `json:"created_on,omitempty"`
+	Repository *Repository `json:"repository,omitempty"`
 
-	State *PipelineState `json:"state,omitempty"`
+	// The target that the pipeline built.
+	Target *PipelineTarget `json:"target,omitempty"`
 
 	// The trigger used for the pipeline.
 	Trigger *PipelineTrigger `json:"trigger,omitempty"`
 
-	// The number of build seconds used by this pipeline.
-	BuildSecondsUsed int32 `json:"build_seconds_used,omitempty"`
+	State *PipelineState `json:"state,omitempty"`
+
+	// The timestamp when the pipeline was created.
+	CreatedOn time.Time `json:"created_on,omitempty"`
 
 	// The timestamp when the Pipeline was completed. This is not set if the pipeline is still in progress.
 	CompletedOn time.Time `json:"completed_on,omitempty"`
 
-	// The UUID identifying the pipeline.
-	Uuid string `json:"uuid,omitempty"`
+	// The number of build seconds used by this pipeline.
+	BuildSecondsUsed int32 `json:"build_seconds_used,omitempty"`
 }

@@ -50,5 +50,5 @@ type Issue struct {
 
 	Votes int32 `json:"votes,omitempty"`
 
-	Content *PullrequestSummary `json:"content,omitempty"`
+	Content *IssueContent `json:"content,omitempty"`
 }

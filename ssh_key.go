@@ -34,5 +34,5 @@ type SshKey struct {
 
 	LastUsed time.Time `json:"last_used,omitempty"`
 
-	Links *MilestoneLinks `json:"links,omitempty"`
+	Links *VersionLinks `json:"links,omitempty"`
 }

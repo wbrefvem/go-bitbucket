@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type_** | **string** |  | [default to null]
-**Links** | [***MilestoneLinks**](milestone_links.md) |  | [optional] [default to null]
+**Links** | [***VersionLinks**](version_links.md) |  | [optional] [default to null]
 **Id** | **int32** | The branch restriction status&#39; id. | [optional] [default to null]
 **Kind** | **string** | The type of restriction that is being applied | [optional] [default to null]
 **Users** | [**[]Account**](account.md) |  | [optional] [default to null]
